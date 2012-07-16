@@ -1,0 +1,13 @@
+- ruby: Open3.capture3
+  clj: clojure.java.shell/sh
+- ruby: Kernel#system
+  clj: clojure.java.shell/sh
+  similar: true
+  desc: sh executes commands but unlike system, stdout is captured as a string.
+- ruby: Kernel#exit
+  clj: System/exit
+- ruby: Kernel#require
+  clj: clojure.core/require
+  desc: They are similar though the clojure version has some useful :reload and :reload-all flags.
+- ruby: Kernel#load
+  clj: clojure.core/load-file
