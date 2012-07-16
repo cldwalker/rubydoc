@@ -1,5 +1,6 @@
 (ns rubydoc.core
-  (:require [clj-yaml.core :as yaml]))
+  (:require [clj-yaml.core :as yaml]
+            [clojure.java.io :as io]))
 
 (declare rows)
 
@@ -10,5 +11,6 @@
     (filter #(matches? (:ruby %)) @rows)))
 
 (def ^:private rows
-  (delay
-    (->> (slurp "src/rubydoc/db.yml") yaml/parse-string)))
+  (let [dir (-> (ClassLoader/getSystemResource *file*) io/file .getParent)]
+    (delay
+      (->> (slurp (str dir "/db.yml")) yaml/parse-string))))
