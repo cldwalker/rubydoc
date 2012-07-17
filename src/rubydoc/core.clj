@@ -13,8 +13,9 @@
       (filter #(matches? (:ruby %)) @rows))))
 
 (defn- print-matches [matches]
-  (if (= 1 (count matches))
-    (table.core/table (first matches))
+  (condp = (count matches)
+    1 (table.core/table (first matches))
+    0 (println "No matches found.")
     (table.core/table matches)))
 
 (def ^:private rows
