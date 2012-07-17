@@ -14,3 +14,10 @@
 - ruby: __FILE__
   clj: "*file*"
   desc: "The ruby value is relative to the current directory and can just be expanded. The clojure value is relative to a classpath directory (not the current directory) and needs to be expanded with: (ClassLoader/getSystemResource *file*)"
+- ruby: Kernel#puts
+  clj: clojure.core/println
+- ruby: Kernel#print
+  clj: clojure.core/print
+- ruby: Kernel#pp
+  clj: clojure.pprint/pprint
+  desc: The ruby meth comes from requiring 'pp', a file in stdlib.
