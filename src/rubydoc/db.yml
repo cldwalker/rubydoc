@@ -8,6 +8,9 @@
   clj: System/exit
 - ruby: Kernel#require
   clj: clojure.core/require
-  desc: They are similar though the clojure version has some useful :reload and :reload-all flags.
+  desc: They are similar though the clojure version has useful :reload and :reload-all flags.
 - ruby: Kernel#load
   clj: clojure.core/load-file
+- ruby: __FILE__
+  clj: "*file*"
+  desc: "The ruby value is relative to the current directory and can just be expanded. The clojure value is relative to a classpath directory (not the current directory) and needs to be expanded with: (ClassLoader/getSystemResource *file*)"
