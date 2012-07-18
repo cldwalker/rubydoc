@@ -21,3 +21,23 @@
 - ruby: Kernel#pp
   clj: clojure.pprint/pprint
   desc: The ruby meth comes from requiring 'pp', a file in stdlib.
+- ruby: Kernel#sleep
+  clj: Thread/sleep
+- ruby: Kernel#at_exit
+  clj: (.addShutdownHook (Runtime/getRuntime) fn-wrapped-in-a-thread)
+  similar: true
+  desc: Whereas at_exits are run in the reverse order defined, multiple ShutdownHooks are run concurrently in an unspecified order.
+- ruby: Object#send
+  clj: "@#'namespace/meth"
+  similar: true
+  desc: |
+    To call private methods as send can, place the deref-ed Var in the function place i.e. (@#\'meth arg1). To dynamically call a ruby variable as send can, convert your clojure symbol to a Var and deref. For example, if you had the function "println" as a string, convert the string into a function and execute it: (@(resolve (symbol "println")) "WOOT").
+- ruby: Object#tap
+  clj: clojure.core/doto
+  desc: |
+    Both tap and doto take an object, act on it with a block/function and then pass on the original object. To compare, given this ruby example "10.tap {|n| puts n } + 5", the clojure equivalent is "(-> 10 (doto println) (+ 5))".
+- ruby: Class#new
+  clj: new
+  desc: Given a ruby example "Klass.new(arg)", the clojure equivalent is "(new Klass arg) or (Klass. arg)".
+- ruby: Object#instance_of?
+  clj: clojure.core/instance?
