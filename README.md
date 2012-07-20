@@ -66,6 +66,9 @@ method/functions, I'm open to expanding this to constants, global variables, cla
 [Some general guidelines](http://tagaholic.me/contributing.html)
 Note: tests aren't needed for db contributions
 
+## Credits
+Thanks to @relevance fridays!
+
 ## TODO
 * Pick more comparisons up from https://gist.github.com/17283
 * Finer-grained search capability i.e. only search desc, clj fields
