@@ -14,7 +14,7 @@
       (unindent
         "
         +-------+------------------------+
-        | key   | value                  |
+        | field | value                  |
         +-------+------------------------+
         | :ruby | Kernel#load            |
         | :clj  | clojure.core/load-file |

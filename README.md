@@ -42,7 +42,7 @@ Let's search for ruby equivalents in clojure:
     ;What's similar to Kernel#system?
     user=> (rubydoc "system")
     +----------+-------------------------------------------------------------------------+
-    | key      | value                                                                   |
+    | field    | value                                                                   |
     +----------+-------------------------------------------------------------------------+
     | :ruby    | Kernel#system                                                           |
     | :clj     | clojure.java.shell/sh                                                   |
