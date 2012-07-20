@@ -1,7 +1,8 @@
 # Description
 
-A tool to make it easier for rubyists to speak clojure and vice versa. Compares versions >= ruby
-1.9.3 and clojure 1.4.0.
+A repl tool to make it easier for rubyists to understand clojure.  This project
+provides a rubydoc command to search the included db of ruby/clojure
+comparisons. Compares versions >= ruby 1.9.3 and clojure 1.4.0.
 
 [![Build Status](https://secure.travis-ci.org/cldwalker/rubydoc.png?branch=master)](http://travis-ci.org/cldwalker/rubydoc)
 
