@@ -31,7 +31,7 @@
   clj: "@#'namespace/meth"
   similar: true
   desc: |
-    To call private methods as send can, place the deref-ed Var in the function place i.e. (@#\'meth arg1). To dynamically call a ruby variable as send can, convert your clojure symbol to a Var and deref. For example, if you had the function "println" as a string, convert the string into a function and execute it: (@(resolve (symbol "println")) "WOOT").
+    To call private methods as send can, place the deref-ed Var in the function place i.e. (@#'meth arg1). To dynamically call a ruby variable as send can, convert your clojure symbol to a Var and deref. For example, if you had the function "println" as a string, convert the string into a function and execute it: (@(resolve (symbol "println")) "WOOT").
 - ruby: Object#tap
   clj: clojure.core/doto
   desc: |
@@ -41,3 +41,12 @@
   desc: Given a ruby example "Klass.new(arg)", the clojure equivalent is "(new Klass arg) or (Klass. arg)".
 - ruby: Object#instance_of?
   clj: clojure.core/instance?
+- ruby: Kernel#raise
+  clj: throw
+- ruby: Object#respond_to?
+  clj: clojure.core/ns-resolve
+  similar: true
+  desc: Whereas respond_to? indicates if an object can call a method, ns-resolve indicates if a namespace can use a Var/Class. ns-resolve is different in that it doesn't return a boolean or report only about functions. See clojure.core/resolve for assuming current namespace.
+- ruby: Symbol#to_s
+  clj: clojure.core/name
+  desc: Use when wanting to stringify a clojure keyword aka ruby symbol.
