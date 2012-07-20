@@ -30,17 +30,11 @@ Let's search for ruby equivalents in clojure:
     ; Pull up any ruby constructs that have IO in it
     user=> (rubydoc "IO")
     +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-    | ruby                                         | clj                    | desc
-    |
+    | ruby                                         | clj                    | desc                                                                                                                             |
     +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-    | IO.open                                      | clojure.core/with-open | with-open is more
-    general as it takes multiple objects to read and close and is open to any java object that has
-    .close defined. |
-    | IO.read and Kernel#open from open-uri stdlib | clojure.core/slurp     | slurp is a generalize
-    read, reading anything java.io.Reader can read which includes files and urls.
-    |
-    | IO.foreach                                   | line-seq               |
-    |
+    | IO.open                                      | clojure.core/with-open | with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined. |
+    | IO.read and Kernel#open from open-uri stdlib | clojure.core/slurp     | slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls.                              |
+    | IO.foreach                                   | line-seq               |                                                                                                                                  |
     +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
     nil
 
