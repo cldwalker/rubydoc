@@ -8,7 +8,7 @@
   clj: System/exit
 - ruby: Kernel#require
   clj: clojure.core/require
-  desc: They are similar though the clojure version has useful :reload and :reload-all flags.
+  desc: They are mostly the same though the clojure version has useful :reload and :reload-all flags.
 - ruby: Kernel#load
   clj: clojure.core/load-file
 - ruby: __FILE__
@@ -50,3 +50,29 @@
 - ruby: Symbol#to_s
   clj: clojure.core/name
   desc: Use when wanting to stringify a clojure keyword aka ruby symbol.
+- ruby: Exception#backtrace
+  clj: clojure.repl/pst
+  similar: true
+  desc: If in a repl, pst will print the given or last exception's stacktrace. If in a program, use (.getStackTrace Exception). To get a useful stacktrace array, more work is required.
+- ruby: Exception#message
+  clj: (.getMessage exception)
+- ruby: Module#include
+  clj: clojure.core/refer
+  desc: Whereas include brings in methods into a module via a class hierarchy, refer brings in vars via mappings. refer has finer-grained control allowing you to rename or selectively include/exclude some vars. See clojure.core/import for importing Java classes into a namespace (no ruby equivalent).
+- ruby: Module#ancestors
+  clj: clojure.core/supers
+  desc: Note that supers is for java classes. See clojure.core/ancestors for tracing tag or class ancestry.
+- ruby: IO.open
+  clj: clojure.core/with-open
+  desc: with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined.
+- ruby: IO.read and Kernel#open from open-uri stdlib
+  clj: clojure.core/slurp
+  desc: slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls.
+- ruby: IO.foreach
+  clj: line-seq
+- ruby: File.directory?
+  clj: (.isDirectory (clojure.java.io/file some_file))
+- ruby: Dir.glob
+  clj: '(defn glob [dir regex] (->> (clojure.java.io/file dir) (file-seq) (map str) (filter #(re-find regex %))))'
+  similar: true
+  desc: This is a simpler version of glob that fully descends a directory and matches files for the given regex.
