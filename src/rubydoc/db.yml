@@ -76,3 +76,30 @@
   clj: '(defn glob [dir regex] (->> (clojure.java.io/file dir) (file-seq) (map str) (filter #(re-find regex %))))'
   similar: true
   desc: This is a simpler version of glob that fully descends a directory and matches files for the given regex.
+- ruby: ENV
+  clj: (System/getenv)
+  desc: To get specific env values, pass the env name to getenv.
+- ruby: RbConfig::CONFIG
+  clj: (System/getProperties)
+  desc: A comprehensive map of system and language information.
+- ruby: Dir.home
+  clj: (System/getProperty "user.home")
+- ruby: "$: or $LOAD_PATH"
+  clj: (seq (.getURLs (ClassLoader/getSystemClassLoader)))
+  desc: These are the loaded loadpaths/classpaths available in your runtime. While in ruby you can just add to this array, clojure will be disallowing this soon - see deprecated clojure.core/add-classpath.
+- ruby: $RUBYLIB
+  clj: $CLASSPATH
+  desc: These environment variables can be manipulated before invoking a program to modify its loadpath/classpath.
+- ruby: STDIN or $stdin
+  clj: "*in*"
+- ruby: STDOUT or $stdout
+  clj: "*out*"
+- ruby: STDERR or $stderr
+  clj: "*err*"
+- ruby: _
+  clj: "*1"
+  desc: "These give back the returned value from the last statement in a repl. Clojure also has *2 and *3 for 2nd and 3rd to last values."
+- ruby: $!
+  clj: "*e"
+  similar: true
+  desc: While ruby's is available to any program, the clojure one is only available in the repl.
