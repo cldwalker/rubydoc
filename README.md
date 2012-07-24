@@ -1,6 +1,6 @@
 # Description
 
-A repl tool to make it easier for rubyists to understand clojure.  This project
+A repl tool to help rubyists find clojure equivalents. This project
 provides a rubydoc command to search the included db of ruby/clojure
 comparisons. Compares versions >= ruby 1.9.3 and clojure 1.4.0.
 
@@ -28,15 +28,23 @@ Let's search for ruby equivalents in clojure:
     user=> (use 'rubydoc.core)
     nil
 
-    ; Pull up any ruby constructs that have IO in it
-    user=> (rubydoc "IO")
-    +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-    | ruby                                         | clj                    | desc                                                                                                                             |
-    +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-    | IO.open                                      | clojure.core/with-open | with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined. |
-    | IO.read and Kernel#open from open-uri stdlib | clojure.core/slurp     | slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls.                              |
-    | IO.foreach                                   | line-seq               |                                                                                                                                  |
-    +----------------------------------------------+------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+    ; Pull up clojure equivalents to Kernel methods
+    user=> (rubydoc "Kernel")
+    +--------------------------------------+--------------------------------------+---------+---------------------------------------------------------------------+
+    | ruby                                 | clj                                  | similar | desc                                                                |
+    +--------------------------------------+--------------------------------------+---------+---------------------------------------------------------------------+
+    | Kernel#system                        | clojure.java.shell/sh                | true    | sh executes commands but unlike system, stdout is captured as a ... |
+    | Kernel#exit                          | System/exit                          |         |                                                                     |
+    | Kernel#require                       | clojure.core/require                 |         | They are mostly the same though the clojure version has useful :... |
+    | Kernel#load                          | clojure.core/load-file               |         |                                                                     |
+    | Kernel#puts                          | clojure.core/println                 |         |                                                                     |
+    | Kernel#print                         | clojure.core/print                   |         |                                                                     |
+    | Kernel#pp                            | clojure.pprint/pprint                |         | The ruby meth comes from requiring 'pp', a file in stdlib.          |
+    | Kernel#sleep                         | Thread/sleep                         |         |                                                                     |
+    | Kernel#at_exit                       | (.addShutdownHook (Runtime/getRun... | true    | Whereas at_exits are run in the reverse order defined, multiple ... |
+    | Kernel#raise                         | throw                                |         |                                                                     |
+    | IO.read and Kernel#open from open... | clojure.core/slurp                   |         | slurp is a generalize read, reading anything java.io.Reader can ... |
+    +--------------------------------------+--------------------------------------+---------+---------------------------------------------------------------------
     nil
 
     ;What's similar to Kernel#system?
