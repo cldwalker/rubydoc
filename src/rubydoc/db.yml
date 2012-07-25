@@ -77,10 +77,10 @@
   similar: true
   desc: This is a simpler version of glob that fully descends a directory and matches files for the given regex.
 - ruby: ENV
-  clj: (System/getenv)
+  clj: System/getenv
   desc: To get specific env values, pass the env name to getenv.
 - ruby: RbConfig::CONFIG
-  clj: (System/getProperties)
+  clj: System/getProperties
   desc: A comprehensive map of system and language information.
 - ruby: Dir.home
   clj: (System/getProperty "user.home")
@@ -117,3 +117,21 @@
 - ruby: Struct#new
   clj: clojure.core/defstruct
   desc: Given this ruby example "Person = Struct.new(:name, :age); Person.new('Bo', 8)", the clojure equivalent would be '(defstruct person :name :age) (struct person "Bo" 8)'.
+- ruby: ActiveSupport/Memoizable#memoize from activesupport gem
+  clj: memoize
+  desc: Memoizes a function based on arguments.
+- ruby: ObjectSpace.each_object(Module).to_a - ObjectSpace.each_object(Class).to_a
+  clj: clojure.core/all-ns
+  similar: true
+  desc: If you think of ruby's modules as clojure namespaces, these two are equivalent. For the ruby example, Class objects were subtracted from Module objects since a Class is a Module.
+- ruby: Proc#curry
+  clj: clojure.core/partial
+  desc: |
+    Generates a function given a function. Given the ruby example "proc {|x,y,z| p x,y,z }.curry[2][1,3]", the clojure equivalent is "((partial #(prn %1 %2 %3) 2) 1 3)". Note that the ruby version doesn't let you populate default args until you call #[] while the clojure one requires at least arg to populate the new function.
+- ruby: Proc#source_location or Method#source_location or UnboundMethod#source_location
+  clj: clojure.repl/source
+  similar: true
+  desc: Whereas the clojure version prints the given function for you, the ruby one only tells you where it starts.
+- ruby: Proc#parameters or Method#parameters or UnboundMethod#parameters
+  clj: "(first ((meta #'fn-name) :arglists))"
+  desc: Returns arguments for given method/function. The ruby version an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest.
