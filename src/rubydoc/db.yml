@@ -103,3 +103,17 @@
   clj: "*e"
   similar: true
   desc: While ruby's is available to any program, the clojure one is only available in the repl.
+- ruby: String#to_i
+  clj: (Integer. "string")
+- ruby: Integer#times
+  clj: clojure.core/dotimes
+  desc: Given the ruby example "5.times {|n| }", the clojure equivalent would be "(dotimes [n 5] )"
+- ruby: Array#new
+  clj: clojure.core/repeat
+  desc: Given the ruby example which generates a vector of 5 3's - "Array.new(5, 3)", the clojure equivalent would be "(repeat 5 3)".
+- ruby: Benchmark.measure from benchmark stdlib
+  clj: clojure.core/time
+  desc: Prints time taken for given code to run.
+- ruby: Struct#new
+  clj: clojure.core/defstruct
+  desc: Given this ruby example "Person = Struct.new(:name, :age); Person.new('Bo', 8)", the clojure equivalent would be '(defstruct person :name :age) (struct person "Bo" 8)'.
