@@ -13,7 +13,7 @@
       (filter #(matches? (:ruby %)) @rows))))
 
 (defn- print-matches [matches]
-  (condp = (count matches)
+  (case (count matches)
     1 (->> (first matches) vec (cons ["field" "value"]) table.core/table)
     0 (println "No matches found.")
     (table.core/table matches)))
