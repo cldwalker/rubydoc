@@ -19,6 +19,5 @@
     (table.core/table matches)))
 
 (def ^:private rows
-  (let [dir (-> (ClassLoader/getSystemResource *file*) io/file .getParent)]
-    (delay
-      (->> (slurp (str dir "/db.yml")) yaml/parse-string))))
+  (delay
+    (->> (slurp (io/resource "rubydoc/db.yml")) yaml/parse-string)))
