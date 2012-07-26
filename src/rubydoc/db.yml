@@ -135,3 +135,71 @@
 - ruby: Proc#parameters or Method#parameters or UnboundMethod#parameters
   clj: "(first ((meta #'fn-name) :arglists))"
   desc: Returns arguments for given method/function. The ruby version an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest.
+- ruby: Array#slice(1..-1)
+  clj: clojure.core/rest
+- ruby: Hash#[] or Hash#fetch
+  clj: clojure.core/get
+  desc: Like fetch, get can take a default value if the key doesn't exist for the map/hash. Unlike fetch, get doesn't fail if a given key isn't found.
+- ruby: Hash#[]=
+  clj: clojure.core/assoc
+  desc: assoc can take more than 2 arguments to set additional key/pairs
+- ruby: Hash#merge
+  clj: clojure.core/merge
+  desc: The clojure version can merge multiple maps. The ruby version takes a block to resolve merge conflicts while clojure requires clojure.core/merge-with to do that.
+- ruby: Enumerable#count
+  clj: clojure.core/count
+- ruby: Hash#key?
+  clj: clojure.core/contains
+- ruby: Hash#delete
+  clj: clojure.core/dissoc
+  desc: dissoc can also delete multiple keys.
+- ruby: Enumerable#reduce
+  clj: clojure.core/reduce
+- ruby: Enumerable#map
+  clj: clojure.core/map
+  desc: The clojure version can take multiple collections and pass as them additional args while the ruby version can only take one array.
+- ruby: Hash.[]
+  clj: clojure.core/hash-map
+  desc: Used often to convert a vec/array to a map/hash. For the ruby example of "Hash[*[1,2,3,4]]", the clojure equivalent is "(apply hash-map [1 2 3 4])".
+- ruby: Hash#invert
+  clj: clojure.set/map-invert
+- ruby: Array#uniq
+  clj: clojure.core/distinct
+- ruby: String#slice(regexp)
+  clj: clojure.core/re-find
+  desc: 'Returns a string if there is match or nil. For the given ruby version "okdok"[/ok/], the clojure equivalent is (re-find #"ok" "okdok").'
+- ruby: String#split
+  clj: clojure.string/split
+  desc: The ruby version can split on string or regexp while the clojure version only does regexp.
+- ruby: 'String#+ or String#<<'
+  clj: clojure.core/str
+  desc: |
+    Clojure version handles multiple arguments. While ruby version doesnt offer this, it does have interpolation "#{one} and #{two}" vs (str one " and " two).
+- ruby: String#% or Kernel#sprintf
+  clj: clojure.core/format
+- ruby: String#sub
+  clj: clojure.string/replace-first
+- ruby: String#gsub
+  clj: clojure.string/replace
+- ruby: String#slice(offset, count)
+  clj: (.substring "string" offset count)
+- ruby: String#scan
+  clj: clojure.core/re-seq
+  desc: Returns a list of all matches a regexp has against a string.
+- ruby: Array#join
+  clj: clojure.string/join
+  desc: Join an array/vec by a given string.
+- ruby: String#upcase
+  clj: clojure.string/upper-case
+- ruby: String#downcase
+  clj: clojure.string/lower-case
+- ruby: String#lstrip
+  clj: clojure.string/triml
+- ruby: String#strip
+  clj: clojure.string/trim
+- ruby: String#rstrip
+  clj: clojure.string/trimr
+- ruby: String#split
+  clj: clojure.string/split-lines
+- ruby: String#reverse
+  clj: clojure.string/reverse
