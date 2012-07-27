@@ -3,14 +3,17 @@
             [clojure.java.io :as io]
             [table.core]))
 
-(declare rows print-matches)
+(declare rows print-matches include?)
 
-(defn rubydoc [str-or-regex]
+(defn rubydoc [str-or-regex & args]
   (let [matches? (if (instance? java.util.regex.Pattern str-or-regex)
                    #(re-find str-or-regex (str %))
-                   #(.contains (str %) (str str-or-regex)))]
+                   #(.contains (str %) (str str-or-regex)))
+        fields (if (include? args :clj) [:clj] [:ruby])]
     (print-matches
-      (filter #(matches? (:ruby %)) @rows))))
+      (filter #(some matches? ((apply juxt fields) %)) @rows))))
+
+(defn- include? [v elem] (some #{elem} v))
 
 (defn- print-matches [matches]
   (case (count matches)

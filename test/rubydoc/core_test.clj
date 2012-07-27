@@ -34,3 +34,17 @@
         +-------------+------------------------+
         ")
       (with-out-str (rubydoc #"Kernel#[el]")))))
+
+(deftest returns-correct-result-for-clojure-field-query
+  (is (=
+      (unindent
+        "
+        +-------+-----------------------------------------------------------------------------------+
+        | field | value                                                                             |
+        +-------+-----------------------------------------------------------------------------------+
+        | :ruby | Array#unshift                                                                     |
+        | :clj  | clojure.core/cons                                                                 |
+        | :desc | See also clojure.core/conj which does this for lists but with arguments reversed. |
+        +-------+-----------------------------------------------------------------------------------+
+        ")
+      (with-out-str (rubydoc "cons" :clj)))))
