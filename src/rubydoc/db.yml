@@ -8,7 +8,7 @@
   clj: System/exit
 - ruby: Kernel#require
   clj: clojure.core/require
-  desc: They are mostly the same though the clojure version has useful :reload and :reload-all flags.
+  desc: They are mostly the same though the clojure version has useful :reload and :reload-all flags. Also the require file format is different. For example, a ruby version of "reply/eval_state", has the clojure equivalent of "reply.eval-state".
 - ruby: Kernel#load
   clj: clojure.core/load-file
 - ruby: __FILE__
@@ -107,7 +107,7 @@
   clj: (Integer. "string")
 - ruby: Integer#times
   clj: clojure.core/dotimes
-  desc: Given the ruby example "5.times {|n| }", the clojure equivalent would be "(dotimes [n 5] )"
+  desc: Given the ruby example "5.times {|n| }", the clojure equivalent would be "(dotimes [n 5] )". Also see clojure.core/repeatedly
 - ruby: Array#new
   clj: clojure.core/repeat
   desc: Given the ruby example which generates a vector of 5 3's - "Array.new(5, 3)", the clojure equivalent would be "(repeat 5 3)".
@@ -203,3 +203,54 @@
   clj: clojure.string/split-lines
 - ruby: String#reverse
   clj: clojure.string/reverse
+- ruby: Array#include? or Enumerable#include?
+  clj: '(some #{element} [1 2 element])'
+  similar: true
+  desc: Given a ruby example of "[1,2,3].include?(1)", the clojure equivalent is "(some #{1} [1 2 3])". Note the clojure version doesn't return a boolean but the element if found.
+- ruby: Object#blank? in activesupport gem
+  clj: clojure.string/blank?
+- ruby: Enumerable#zip or Array#zip
+  clj: clojure.core/interleave
+  similar: true
+  desc: While the ruby version returns an array of zipped arrays, the clojure version returns a flattened array.
+- ruby: Array#[]
+  clj: clojure.core/get or clojure.core/nth
+  desc: get is most like the ruby version as it returns nil for non-existent indices whereas nth will throw an error.
+- ruby: Enumerable#first
+  clj: clojure.core/first
+- ruby: Enumerable#take
+  clj: clojure.core/take
+- ruby: Enumerable#drop
+  clj: clojure.core/drop
+- ruby: Enumerable#take-while
+  clj: clojure.core/take-while
+- ruby: Enumerable#drop-while
+  clj: clojure.core/drop-while
+- ruby: Array#last
+  clj: clojure.core/last
+- ruby: Array#unshift
+  clj: clojure.core/cons
+  desc: See also clojure.core/conj which does this for lists but with arguments reversed.
+- ruby: Enumerable#find_all or Enumerable#select
+  clj: clojure.core/filter
+- ruby: Enumerable#sort
+  clj: clojure.core/sort
+- ruby: Enumerable#sort_by
+  clj: clojure.core/sort-by
+- ruby: Enumerable#reject
+  clj: clojure.core/remove
+- ruby: '[].map.with_index'
+  clj: clojure.core/map-indexed
+  desc: The clojure version takes the index and element while the ruby one has the arguments reversed.
+- ruby: Enumerable#all?
+  clj: clojure.core/every
+- ruby: Enumerable#each
+  clj: clojure.core/doseq
+- ruby: Enumerable#any?
+  clj:  '(some true? [1 2 3])'
+  desc: ruby version returns a boolean while the clojure one does not.
+- ruby: BasicObject#equal?
+  clj: clojure.core/identical?
+  desc: exact same object
+- ruby: BasicObject#==
+  clj: clojure.core/=
