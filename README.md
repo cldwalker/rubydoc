@@ -74,4 +74,3 @@ Thanks to @relevance fridays!
 
 ## TODO
 * Pick more comparisons up from https://gist.github.com/17283
-* Finer-grained search capability i.e. only search desc, clj fields

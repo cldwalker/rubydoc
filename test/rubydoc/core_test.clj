@@ -35,7 +35,7 @@
         ")
       (with-out-str (rubydoc #"Kernel#[el]")))))
 
-(deftest returns-correct-result-for-clojure-field-query
+(deftest returns-correct-result-when-searching-clojure-field
   (is (=
       (unindent
         "
@@ -48,3 +48,17 @@
         +-------+-----------------------------------------------------------------------------------+
         ")
       (with-out-str (rubydoc "cons" :clj)))))
+
+(deftest returns-correct-result-when-searching-all-fields
+  (is (=
+      (unindent
+        "
+        +-------+------------------------------------------------------------------+
+        | field | value                                                            |
+        +-------+------------------------------------------------------------------+
+        | :ruby | Symbol#to_s                                                      |
+        | :clj  | clojure.core/name                                                |
+        | :desc | Use when wanting to stringify a clojure keyword aka ruby symbol. |
+        +-------+------------------------------------------------------------------+
+        ")
+      (with-out-str (rubydoc "aka ruby" :all)))))

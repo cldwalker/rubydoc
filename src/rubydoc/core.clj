@@ -9,7 +9,10 @@
   (let [matches? (if (instance? java.util.regex.Pattern str-or-regex)
                    #(re-find str-or-regex (str %))
                    #(.contains (str %) (str str-or-regex)))
-        fields (if (include? args :clj) [:clj] [:ruby])]
+        fields (cond
+                 (include? args :clj) [:clj]
+                 (include? args :all) [:ruby :clj :desc]
+                 :else [:ruby])]
     (print-matches
       (filter #(some matches? ((apply juxt fields) %)) @rows))))
 
