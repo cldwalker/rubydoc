@@ -72,6 +72,10 @@
   clj: line-seq
 - ruby: File.directory?
   clj: (.isDirectory (clojure.java.io/file some_file))
+- ruby: File.exists?
+  clj: (.exists (clojure.java.io/file some_file))
+- ruby: File.file?
+  clj: (.isFile (clojure.java.io/file some_file))
 - ruby: Dir.glob
   clj: '(defn glob [dir regex] (->> (clojure.java.io/file dir) (file-seq) (map str) (filter #(re-find regex %))))'
   similar: true
@@ -254,3 +258,11 @@
   desc: exact same object
 - ruby: BasicObject#==
   clj: clojure.core/=
+- ruby: Array#concat
+  clj: clojure.core/concat
+  desc: Clojure version can take multiple collections.
+- ruby: Array#flatten or Hash#flatten
+  clj: clojure.core/flatten
+  desc: Ruby version can flatten to a given level.
+- ruby: MiniTest::Assertions#assert from minitest stdlib
+  clj: clojure.core/assert
