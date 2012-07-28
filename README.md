@@ -47,7 +47,7 @@ Let's search for ruby equivalents in clojure:
     +--------------------------------------+--------------------------------------+---------+---------------------------------------------------------------------
     nil
 
-    ;What's similar to Kernel#system?
+    ; What's similar to ruby's system?
     user=> (rubydoc "system")
     +----------+-------------------------------------------------------------------------+
     | field    | value                                                                   |
@@ -58,6 +58,27 @@ Let's search for ruby equivalents in clojure:
     | :desc    | sh executes commands but unlike system, stdout is captured as a string. |
     +----------+-------------------------------------------------------------------------+
     nil
+
+    ; What clojure functions have 'con' in them
+    (rubydoc "con" :clj)
+    +---------------+-----------------------+-----------------------------------------------------------------------------------+
+    | ruby          | clj                   | desc                                                                              |
+    +---------------+-----------------------+-----------------------------------------------------------------------------------+
+    | Hash#key?     | clojure.core/contains |                                                                                   |
+    | Array#unshift | clojure.core/cons     | See also clojure.core/conj which does this for lists but with arguments reversed. |
+    | Array#concat  | clojure.core/concat   | Clojure version can take multiple collections.                                    |
+    +---------------+-----------------------+-----------------------------------------------------------------------------------+
+
+    ; Do any records have 'private' anywhere in them?
+    user=> (rubydoc "private" :all)
+    +----------+------------------------------------------------------------------------+
+    | field    | value                                                                  |
+    +----------+------------------------------------------------------------------------+
+    | :ruby    | Object#send                                                            |
+    | :clj     | @#'namespace/meth                                                      |
+    | :similar | true                                                                   |
+    | :desc    | To call private methods as send can, place the deref-ed Var in the ... |
+    +----------+------------------------------------------------------------------------+
 
 ## Contributing
 

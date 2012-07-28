@@ -5,7 +5,14 @@
 
 (declare rows print-matches include?)
 
-(defn rubydoc [str-or-regex & args]
+(defn rubydoc
+  "Searches database of ruby/clojure comparisons. Default search field is :ruby. Options:
+  Options:
+
+  :clj  Search clojure field.
+  :all  Search all fields.
+  "
+  [str-or-regex & args]
   (let [matches? (if (instance? java.util.regex.Pattern str-or-regex)
                    #(re-find str-or-regex (str %))
                    #(.contains (str %) (str str-or-regex)))
