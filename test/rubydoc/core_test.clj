@@ -22,6 +22,24 @@
         ")
       (with-out-str (rubydoc "load")))))
 
+(deftest prints-wrapped-table-for-one-match
+  (is (=
+      (unindent
+        "
+        +----------+-----------------------------------------------------------------------------------------------------------------------------------------+
+        | field    | value                                                                                                                                   |
+        +----------+-----------------------------------------------------------------------------------------------------------------------------------------+
+        | :ruby    | Object#respond_to?                                                                                                                      |
+        | :clj     | clojure.core/ns-resolve                                                                                                                 |
+        | :similar | true                                                                                                                                    |
+        | :desc    | Whereas respond_to? indicates if an object can call a method, ns-resolve indicates if a namespace can use a Var/Class. ns-resolve is di |
+        |          | fferent in that it doesn't return a boolean or report only about functions. See clojure.core/resolve for assuming current namespace.    |
+        +----------+-----------------------------------------------------------------------------------------------------------------------------------------+
+        ")
+       (with-out-str
+         (binding [table.width/*width* (delay 150)]
+           (rubydoc "respond_to"))))))
+
 (deftest prints-table-for-regex-query-with-multiple-matches
   (is (=
       (unindent

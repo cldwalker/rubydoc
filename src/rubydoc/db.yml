@@ -266,3 +266,5 @@
   desc: Ruby version can flatten to a given level.
 - ruby: MiniTest::Assertions#assert from minitest stdlib
   clj: clojure.core/assert
+- ruby: 'Array#<<'
+  clj: clojure.core/conj
