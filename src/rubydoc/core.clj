@@ -31,17 +31,17 @@
     0 (println "No matches found.")
     (table.core/table matches)))
 
-(defn- max-width []
-  (- @table.width/*width* (+ 2 8 3 2)))
-
 (defn- wrap-rows [rows]
-  (reduce
-    #(if (> (count (str (second %2))) (max-width)) (concat %1 (wrap-row %2)) (conj %1 %2))
-    []
-    rows))
+  (let [field-length (apply max (map (comp count str first) rows))
+        ; 2 3 2 corresponds to outer + inner border lengths
+        max-width (- @table.width/*width* (+ 2 3 2 field-length))]
+    (reduce
+      #(if (> (count (str (second %2))) max-width)
+         (concat %1 (wrap-row %2 max-width)) (conj %1 %2))
+      [] rows)))
 
-(defn- wrap-row [[field value]]
-  (let [rows (->> (re-seq (re-pattern (str ".{0," (max-width) "}")) value) (remove empty?))]
+(defn- wrap-row [[field value] max-width]
+  (let [rows (->> (re-seq (re-pattern (str ".{0," max-width "}")) value) (remove empty?))]
     (cons
       [field (first rows)]
       (map #(vec ["" %]) (rest rows)))))
