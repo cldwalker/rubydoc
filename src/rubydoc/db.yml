@@ -271,3 +271,11 @@
 - ruby: Regexp#new
   clj: re-pattern
   desc: Since clojure regexps can't interpolate symbols as in ruby, use this to generate a string that converts to a regexp.
+- ruby: Enumerable#group_by
+  desc: clojure.core/group-by
+- ruby: URI.encode from uri stdlib
+  clj: java.net.URLEncoder/encode
+- ruby: URI.decode from uri stdlib
+  clj: java.net.URLDecoder/decode
+- ruby: Kernel#warn
+  clj: (binding [*out* *err*] (println "FAILED!"))
