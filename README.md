@@ -10,11 +10,11 @@ comparisons. Compares versions >= ruby 1.9.3 and clojure 1.4.0.
 
 To have it available on all projects, add to your leiningen2's ~/lein/profiles.clj:
 
-    {:user {:dependencies { rubydoc "0.1.0"}}}
+    {:user {:dependencies { rubydoc "0.2.0"}}}
 
 To have it on an individual project, add to your project.clj:
 
-    [rubydoc "0.1.0"]
+    [rubydoc "0.2.0"]
 
 ## Usage
 
@@ -91,7 +91,7 @@ method/functions, I'm open to expanding this to constants, global variables, cla
 Note: tests aren't needed for db contributions
 
 ## Credits
-Thanks to @relevance fridays!
+Thanks to @relevance fridays for time to start this!
 
 ## TODO
 * Pick more comparisons up from https://gist.github.com/17283
