@@ -13,7 +13,7 @@
  {:ruby "__FILE__",
   :clj "*file*",
   :desc
-  "The ruby value is relative to the current directory and can just be expanded. The clojure value is relative to a classpath directory (not the current directory) and needs to be expanded with: (ClassLoader/getSystemResource *file*)"}
+  "The ruby value is relative to the current directory and can just be expanded. The clojure value is relative to a classpath directory (not the current directory) and needs to be expanded with: (ClassLoader/getSystemResource *file*)."}
  {:ruby "Kernel#puts", :clj "clojure.core/println"}
  {:ruby "Kernel#print", :clj "clojure.core/print"}
  {:ruby "Kernel#pp",
@@ -116,7 +116,7 @@
  {:ruby "Integer#times",
   :clj "clojure.core/dotimes",
   :desc
-  "Given the ruby example \"5.times {|n| }\", the clojure equivalent would be \"(dotimes [n 5] )\". Also see clojure.core/repeatedly"}
+  "Given the ruby example \"5.times {|n| }\", the clojure equivalent would be \"(dotimes [n 5] )\". Also see clojure.core/repeatedly."}
  {:ruby "Array#new",
   :clj "clojure.core/repeat",
   :desc
@@ -160,7 +160,7 @@
  {:ruby "Hash#[]=",
   :clj "clojure.core/assoc",
   :desc
-  "assoc can take more than 2 arguments to set additional key/pairs"}
+  "assoc can take more than 2 arguments to set additional key/pairs."}
  {:ruby "Hash#merge",
   :clj "clojure.core/merge",
   :desc
@@ -254,7 +254,7 @@
   "ruby version returns a boolean while the clojure one does not."}
  {:ruby "BasicObject#equal?",
   :clj "clojure.core/identical?",
-  :desc "exact same object"}
+  :desc "Determines if objects are exactly the same."}
  {:ruby "BasicObject#==", :clj "clojure.core/="}
  {:ruby "Array#concat",
   :clj "clojure.core/concat",
@@ -285,4 +285,4 @@
  {:ruby "File::Separator", :clj "java.io.File/separator"}
  {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version"}
  {:ruby "irb stdlib" :clj "clojure.main/repl" :desc "Clojure's is smaller but also more extendable."}
- {:ruby "=begin and =end" :clj "clojure.core/comment" :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it"}]
+ {:ruby "=begin and =end" :clj "clojure.core/comment" :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}]

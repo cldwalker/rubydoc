@@ -80,3 +80,7 @@
         +-------+------------------------------------------------------------------+
         ")
       (with-out-str (rubydoc "aka ruby" :all)))))
+
+(deftest all-descriptions-end-in-a-period
+  (is (=
+      '() (->> @@#'rubydoc.core/rows (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
