@@ -81,6 +81,10 @@
         ")
       (with-out-str (rubydoc "aka ruby" :all)))))
 
+(deftest all-records-have-required-fields
+  (is (=
+      '() (->> @@#'rubydoc.core/rows (remove #(and (contains? % :ruby) (contains? % :clj)))))))
+
 (deftest all-descriptions-end-in-a-period
   (is (=
       '() (->> @@#'rubydoc.core/rows (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
