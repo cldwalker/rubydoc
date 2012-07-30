@@ -284,5 +284,8 @@
   :clj "java.io.File/createTempFile"}
  {:ruby "File::Separator", :clj "java.io.File/separator"}
  {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version"}
- {:ruby "irb stdlib" :clj "clojure.main/repl" :desc "Clojure's is smaller but also more extendable."}
- {:ruby "=begin and =end" :clj "clojure.core/comment" :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}]
+ {:ruby "irb stdlib" :clj "clojure.main/repl"
+  :desc "Clojure's is smaller but also more extendable."}
+ {:ruby "=begin and =end" :clj "clojure.core/comment"
+  :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
+ {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}]
