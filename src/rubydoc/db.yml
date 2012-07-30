@@ -64,7 +64,7 @@
   desc: Note that supers is for java classes. See clojure.core/ancestors for tracing tag or class ancestry.
 - ruby: IO.open
   clj: clojure.core/with-open
-  desc: with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined.
+  desc: with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined. See clojure.core/spit for a quick way to write to a file.
 - ruby: IO.read and Kernel#open from open-uri stdlib
   clj: clojure.core/slurp
   desc: slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls.
@@ -272,10 +272,18 @@
   clj: re-pattern
   desc: Since clojure regexps can't interpolate symbols as in ruby, use this to generate a string that converts to a regexp.
 - ruby: Enumerable#group_by
-  desc: clojure.core/group-by
+  clj: clojure.core/group-by
 - ruby: URI.encode from uri stdlib
   clj: java.net.URLEncoder/encode
 - ruby: URI.decode from uri stdlib
   clj: java.net.URLDecoder/decode
 - ruby: Kernel#warn
   clj: (binding [*out* *err*] (println "FAILED!"))
+- ruby: File.delete or FileUtils.rm
+  clj: clojure.java.io/delete-file
+- ruby: Dir.entries
+  clj: (-> (clojure.java.io/file "DIRECTORY") .list vec)
+- ruby: Tempfile.new from tempfile stdlib
+  clj: java.io.File/createTempFile
+- ruby: File::Separator
+  clj: java.io.File/separator
