@@ -1,6 +1,5 @@
 (ns rubydoc.core
-  (:require [clj-yaml.core :as yaml]
-            [clojure.java.io :as io]
+  (:require [clojure.java.io :as io]
             [table.core]))
 
 (declare rows print-matches include? wrap-rows wrap-row)
@@ -48,4 +47,4 @@
 
 (def ^:private rows
   (delay
-    (->> (slurp (io/resource "rubydoc/db.yml")) yaml/parse-string)))
+    (->> (slurp (io/resource "rubydoc/db.clj")) read-string)))
