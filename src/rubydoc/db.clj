@@ -282,4 +282,7 @@
   :clj "(-> (clojure.java.io/file \"DIRECTORY\") .list vec)"}
  {:ruby "Tempfile.new from tempfile stdlib",
   :clj "java.io.File/createTempFile"}
- {:ruby "File::Separator", :clj "java.io.File/separator"}]
+ {:ruby "File::Separator", :clj "java.io.File/separator"}
+ {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version"}
+ {:ruby "irb stdlib" :clj "clojure.main/repl" :desc "Clojure's is smaller but also more extendable."}
+ {:ruby "=begin and =end" :clj "clojure.core/comment" :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it"}]
