@@ -166,7 +166,7 @@
   :desc
   "The clojure version can merge multiple maps. The ruby version takes a block to resolve merge conflicts while clojure requires clojure.core/merge-with to do that."}
  {:ruby "Enumerable#count", :clj "clojure.core/count"}
- {:ruby "Hash#key?", :clj "clojure.core/contains"}
+ {:ruby "Hash#key?", :clj "clojure.core/contains?"}
  {:ruby "Hash#delete",
   :clj "clojure.core/dissoc",
   :desc "dissoc can also delete multiple keys."}
@@ -246,7 +246,7 @@
   :clj "clojure.core/map-indexed",
   :desc
   "The clojure version takes the index and element while the ruby one has the arguments reversed."}
- {:ruby "Enumerable#all?", :clj "clojure.core/every"}
+ {:ruby "Enumerable#all?", :clj "clojure.core/every?"}
  {:ruby "Enumerable#each", :clj "clojure.core/doseq"}
  {:ruby "Enumerable#any?",
   :clj "(some true? [1 2 3])",

@@ -1,6 +1,6 @@
 (ns rubydoc.core-test
-  (:use clojure.test
-        rubydoc.core))
+  (:use clojure.test rubydoc.core)
+  (:require clojure.string))
 
 (defn unindent [string]
   (str (clojure.string/replace (clojure.string/trim string) #"\n\s*" "\n") "\n"))
@@ -88,3 +88,19 @@
 (deftest all-descriptions-end-in-a-period
   (is (=
       '() (->> @@#'rubydoc.core/rows (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
+
+(deftest all-clojure-functions-resolve
+  (is
+    (=
+      '()
+      (->> @@#'rubydoc.core/rows
+           (map :clj)
+           (filter #(re-find #"^clojure\.\S+/\S+$" %))
+           (map symbol)
+           (remove resolve)
+           ; autorequire namespaces that haven't been loaded
+           ((fn [_ syms] (doseq [namesp (->> syms (map str) (map #(clojure.string/split % #"/")) (map first) distinct)]
+                           (try (require (symbol namesp)) (catch Exception e)))
+                          syms)
+              :_)
+           (remove resolve)))))
