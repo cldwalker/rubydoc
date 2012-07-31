@@ -288,4 +288,11 @@
   :desc "Clojure's is smaller but also more extendable."}
  {:ruby "=begin and =end" :clj "clojure.core/comment"
   :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
- {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}]
+ {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}
+ {:ruby "Enumerable#shuffle" :clj "clojure.core/shuffle"}
+ {:ruby "Enumerable#cycle" :clj "clojure.core/cycle"}
+ {:ruby "Enumerable#each_with_object" :clj "clojure.core/reduce"
+  :similar true
+  :desc "each_with_object is a specialized reduce that doesn't care what the return value of the reducing function is. Given the ruby example '[:a, :b, :c].each_with_object({}) {|a,b| b[a] = 1 }', the equivalent clojure '(reduce #(assoc %1 %2 1) {} [:a :b :c])'."}
+ {:ruby "Enumerable#flat_map" :clj "(comp flatten map)"
+  :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}]
