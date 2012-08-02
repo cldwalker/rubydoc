@@ -6,8 +6,8 @@
   (str (clojure.string/replace (clojure.string/trim string) #"\n\s*" "\n") "\n"))
 
 (deftest prints-message-for-no-matches
-  (is (= "No matches found.")
-      (with-out-str (rubydoc "blarg"))))
+  (is (= "No matches found.\n"
+      (with-out-str (rubydoc "blarg")))))
 
 (deftest prints-table-for-one-match
   (is (=
@@ -84,6 +84,25 @@
         +-------+------------------------------------------------------------------+
         ")
       (with-out-str (rubydoc "aka ruby" :all)))))
+
+(deftest returns-correct-result-for-record-number
+  (is (=
+      (unindent
+        "
+        +-------+-----------------------+
+        | field | value                 |
+        +-------+-----------------------+
+        | :id   | 0                     |
+        | :ruby | Open3.capture3        |
+        | :clj  | clojure.java.shell/sh |
+        +-------+-----------------------+
+        ")
+      (with-out-str (rubydoc 0)))))
+
+(deftest returns-no-result-for-record-number
+  (is (=
+      "No matches found.\n"
+      (with-out-str (rubydoc -1)))))
 
 (deftest all-records-have-required-fields
   (is (=

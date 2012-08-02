@@ -5,28 +5,31 @@
 (declare rows print-matches include? wrap-rows wrap-row)
 
 (defn rubydoc
-  "Searches database of ruby/clojure comparisons. Default search field is :ruby. Options:
+  "Searches database of ruby-clojure comparisons using a string, regex or record id.
+  Default search field is :ruby.
   Options:
 
   :clj  Search clojure field.
   :all  Search all fields.
   "
-  [str-or-regex & args]
-  (let [matches? (if (instance? java.util.regex.Pattern str-or-regex)
-                   #(re-find str-or-regex (str %))
-                   #(.contains (str %) (str str-or-regex)))
-        fields (cond
-                 (include? args :clj) [:clj]
-                 (include? args :all) [:ruby :clj :desc]
-                 :else [:ruby])]
-    (print-matches
-      (filter #(some matches? ((apply juxt fields) %)) @rows))))
+  [query & args]
+  (print-matches
+    (if (integer? query)
+      (let [result (get @rows query)] (if (nil? result) [] [result]))
+      (let [matches? (if (instance? java.util.regex.Pattern query)
+                       #(re-find query (str %))
+                       #(.contains (str %) (str query)))
+            fields (cond
+                     (include? args :clj) [:clj]
+                     (include? args :all) [:ruby :clj :desc]
+                     :else [:ruby])]
+      (filter #(some matches? ((apply juxt fields) %)) @rows)))))
 
 (defn- include? [v elem] (some #{elem} v))
 
 (defn- print-matches [matches]
   (case (count matches)
-    1 (->> (first matches) vec wrap-rows (cons ["field" "value"]) table.core/table)
+    1 (->> (first matches) wrap-rows (cons ["field" "value"]) table.core/table)
     0 (println "No matches found.")
     (table.core/table matches)))
 
@@ -50,4 +53,5 @@
     (->>
       (slurp (io/resource "rubydoc/db.clj"))
       read-string
-      (map-indexed #(assoc %2 :id %1)))))
+      (map-indexed #(assoc %2 :id %1))
+      vec)))
