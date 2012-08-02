@@ -47,4 +47,7 @@
 
 (def ^:private rows
   (delay
-    (->> (slurp (io/resource "rubydoc/db.clj")) read-string)))
+    (->>
+      (slurp (io/resource "rubydoc/db.clj"))
+      read-string
+      (map-indexed #(assoc %2 :id %1)))))
