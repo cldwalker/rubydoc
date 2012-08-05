@@ -295,4 +295,12 @@
   :similar true
   :desc "each_with_object is a specialized reduce that doesn't care what the return value of the reducing function is. Given the ruby example '[:a, :b, :c].each_with_object({}) {|a,b| b[a] = 1 }', the equivalent clojure '(reduce #(assoc %1 %2 1) {} [:a :b :c])'."}
  {:ruby "Enumerable#flat_map" :clj "(comp flatten map)"
-  :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}]
+  :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}
+ {:ruby "Set#-" :clj "clojure.set/difference"}
+ {:ruby "Set#superset?" :clj "clojure.set/superset?"}
+ {:ruby "Set#union or Set#|" :clj "clojure.set/union"}
+ {:ruby "Set#intersection or Set#&" :clj "clojure.set/intersection"}
+ {:ruby "Set#subset?" :clj "clojure.set/subset?"}
+ {:ruby "Set#add or Set#+" :clj "clojure.core/concat"}
+ {:ruby "Set#classify" :clj "clojure.set/index"
+  :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}]
