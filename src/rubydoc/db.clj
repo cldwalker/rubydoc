@@ -170,8 +170,8 @@
  {:ruby "Hash#delete",
   :clj "clojure.core/dissoc",
   :desc "dissoc can also delete multiple keys."}
- {:ruby "Enumerable#reduce", :clj "clojure.core/reduce"}
- {:ruby "Enumerable#map",
+ {:ruby "Enumerable#reduce or Enumerable#inject", :clj "clojure.core/reduce"}
+ {:ruby "Enumerable#map or Enumerable#collect",
   :clj "clojure.core/map",
   :desc
   "The clojure version can take multiple collections and pass as them additional args while the ruby version can only take one array."}
@@ -237,8 +237,9 @@
   :clj "clojure.core/cons",
   :desc
   "See also clojure.core/conj which does this for lists but with arguments reversed."}
- {:ruby "Enumerable#find_all or Enumerable#select",
-  :clj "clojure.core/filter"}
+ {:ruby "Enumerable#find_all or Enumerable#select or Enumerable#delete_if",
+  :clj "clojure.core/filter"
+  :desc "delete_if is the same as filter since they both return values filter by the function/block. delete_if has side effects which aren't possible in the clojure version."}
  {:ruby "Enumerable#sort", :clj "clojure.core/sort"}
  {:ruby "Enumerable#sort_by", :clj "clojure.core/sort-by"}
  {:ruby "Enumerable#reject", :clj "clojure.core/remove"}
@@ -258,13 +259,14 @@
  {:ruby "BasicObject#==", :clj "clojure.core/="}
  {:ruby "Array#concat",
   :clj "clojure.core/concat",
-  :desc "Clojure version can take multiple collections."}
+  :desc "Clojure version can take multiple collections. See also clojure.core/into which adds collections but in different orders depending on the data structure."}
  {:ruby "Array#flatten or Hash#flatten",
   :clj "clojure.core/flatten",
   :desc "Ruby version can flatten to a given level."}
  {:ruby "MiniTest::Assertions#assert from minitest stdlib",
   :clj "clojure.core/assert"}
- {:ruby "Array#<<", :clj "clojure.core/conj"}
+ {:ruby "Array#<<", :clj "clojure.core/conj"
+  :desc "conj adds to a collection in the most efficient way possible for a data structure. For lists this means prepending and for vectors it means appending."}
  {:ruby "Regexp#new",
   :clj "re-pattern",
   :desc
@@ -303,4 +305,27 @@
  {:ruby "Set#subset?" :clj "clojure.set/subset?"}
  {:ruby "Set#add or Set#+" :clj "clojure.core/concat"}
  {:ruby "Set#classify" :clj "clojure.set/index"
-  :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}]
+  :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}
+ {:ruby "Range#new or Integer#step" :clj "clojure.core/range"}
+ {:ruby "Kernel#trap" :clj "clojure.repl/set-break-handler!"
+  :similar true
+  :desc "The clojure version only handles the INT signal. 'source clojure.repl/set-break-handler!' to see how to trap other signals."}
+ {:ruby "Hash#keys" :clj "clojure.core/keys"}
+ {:ruby "Hash#values" :clj "clojure.core/vals"}
+ {:ruby "Hash#values_at" :clj "clojure.core/juxt"
+  :similar true
+  :desc "Given a ruby example of '{a: 1, b:2}.values_at(:a, :b)', the clojure equivalent is '((juxt :a :b) {:a 1 :b 2})'."}
+ {:ruby "Enumerable#to_a or Kernel#Array" :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"}
+ {:ruby "Enumerable#none?" :clj "(comp zero? count filter)"}
+ {:ruby "Enumerable#one?" :clj "(comp #(= 1 %) count filter)"}
+ {:ruby "Enumerable#min or Enumerable#min_by" :clj "clojure.core/min"
+  :desc "See clojure.core/min-key to get the block functionality that min has."}
+ {:ruby "Enumerable#max or Enumerable#max_by" :clj "clojure.core/max"
+  :desc "See clojure.core/max-key to get the block functionality that max has."}
+ {:ruby "Enumerable#each_slice" :clj "clojure.core/partition-all"
+  :desc "Given the ruby example '(0..4).each_slice(2).to_a', the clojure equivalent is '(partition-all 2 (range 0 5))'."}
+ {:ruby "Enumerable#each_enum" :clj "clojure.core/partition"
+  :desc "Clojure version is more general as it handles steps and padding. Given the ruby example '(0..4).each_cons(2).to_a', the clojure equivalent is '(partition 2 1 (range 0 5))'."}
+ {:ruby "Enumerable#chunk" :clj "clojure.core/partition-by"
+  :similar true
+  :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}]
