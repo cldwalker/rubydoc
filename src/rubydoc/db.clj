@@ -100,9 +100,12 @@
   :clj "$CLASSPATH",
   :desc
   "These environment variables can be manipulated before invoking a program to modify its loadpath/classpath."}
- {:ruby "STDIN or $stdin", :clj "*in*"}
- {:ruby "STDOUT or $stdout", :clj "*out*"}
- {:ruby "STDERR or $stderr", :clj "*err*"}
+ {:ruby "STDIN or $stdin", :clj "*in*"
+  :desc "*in* is thread local and used by clojure while System/in is global and used by java internals."}
+ {:ruby "STDOUT or $stdout", :clj "*out*"
+  :desc "*out* is thread local and used by clojure while System/out is global and used by java internals."}
+ {:ruby "STDERR or $stderr", :clj "*err*"
+  :desc "*err* is thread local and used by clojure while System/err is global and used by java internals."}
  {:ruby "_",
   :clj "*1",
   :desc
@@ -328,4 +331,6 @@
   :desc "Clojure version is more general as it handles steps and padding. Given the ruby example '(0..4).each_cons(2).to_a', the clojure equivalent is '(partition 2 1 (range 0 5))'."}
  {:ruby "Enumerable#chunk" :clj "clojure.core/partition-by"
   :similar true
-  :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}]
+  :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
+ {:ruby "Time.now" :clj "System/currentTimeMillis"
+  :desc "See also System/nanoTime."}]
