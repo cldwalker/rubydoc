@@ -35,7 +35,7 @@
   :clj "clojure.core/doto",
   :desc
   "Both tap and doto take an object, act on it with a block/function and then pass on the original object. To compare, given this ruby example \"10.tap {|n| puts n } + 5\", the clojure equivalent is \"(-> 10 (doto println) (+ 5))\"."}
- {:ruby "Class#new",
+ {:ruby "Class.new",
   :clj "new",
   :desc
   "Given a ruby example \"Klass.new(arg)\", the clojure equivalent is \"(new Klass arg) or (Klass. arg)\"."}
@@ -120,14 +120,14 @@
   :clj "clojure.core/dotimes",
   :desc
   "Given the ruby example \"5.times {|n| }\", the clojure equivalent would be \"(dotimes [n 5] )\". Also see clojure.core/repeatedly."}
- {:ruby "Array#new",
+ {:ruby "Array.new",
   :clj "clojure.core/repeat",
   :desc
   "Given the ruby example which generates a vector of 5 3's - \"Array.new(5, 3)\", the clojure equivalent would be \"(repeat 5 3)\"."}
  {:ruby "Benchmark.measure from benchmark stdlib",
   :clj "clojure.core/time",
   :desc "Prints time taken for given code to run."}
- {:ruby "Struct#new",
+ {:ruby "Struct.new",
   :clj "clojure.core/defstruct",
   :desc
   "Given this ruby example \"Person = Struct.new(:name, :age); Person.new('Bo', 8)\", the clojure equivalent would be '(defstruct person :name :age) (struct person \"Bo\" 8)'."}
@@ -271,7 +271,7 @@
   :clj "clojure.core/assert"}
  {:ruby "Array#<<", :clj "clojure.core/conj"
   :desc "conj adds to a collection in the most efficient way possible for a data structure. For lists this means prepending and for vectors it means appending."}
- {:ruby "Regexp#new",
+ {:ruby "Regexp.new",
   :clj "re-pattern",
   :desc
   "Since clojure regexps can't interpolate symbols as in ruby, use this to generate a string that converts to a regexp."}
@@ -310,7 +310,7 @@
  {:ruby ["Set#add" "Set#+"] :clj "clojure.core/concat"}
  {:ruby "Set#classify" :clj "clojure.set/index"
   :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}
- {:ruby ["Range#new" "Integer#step"] :clj "clojure.core/range"}
+ {:ruby ["Range.new" "Integer#step"] :clj "clojure.core/range"}
  {:ruby "Kernel#trap" :clj "clojure.repl/set-break-handler!"
   :similar true
   :desc "The clojure version only handles the INT signal. 'source clojure.repl/set-break-handler!' to see how to trap other signals."}
@@ -334,4 +334,7 @@
   :similar true
   :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
  {:ruby "Time.now" :clj "System/currentTimeMillis"
-  :desc "See also System/nanoTime."}]
+  :desc "See also System/nanoTime."}
+ {:ruby "Set.new" :clj "clojure.core/set"}
+ {:ruby "Set#member?" :clj "(#{1 2 3} 1)"
+  :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}]
