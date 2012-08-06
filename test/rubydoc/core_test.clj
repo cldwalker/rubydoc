@@ -62,7 +62,7 @@
         +-------+-----------------------------------------------------------------------------------+
         | field | value                                                                             |
         +-------+-----------------------------------------------------------------------------------+
-        | :id   | 87                                                                                |
+        | :id   | 103                                                                               |
         | :ruby | Array#unshift                                                                     |
         | :clj  | clojure.core/cons                                                                 |
         | :desc | See also clojure.core/conj which does this for lists but with arguments reversed. |
@@ -103,6 +103,10 @@
   (is (=
       "No matches found.\n"
       (with-out-str (rubydoc -1)))))
+
+(deftest records-with-multiple-rubies-expand-with-duplicated-fields
+  (is ((set @@#'rubydoc.core/rows)  {:id 146 :ruby "Set#add" :clj "clojure.core/concat"}))
+  (is ((set @@#'rubydoc.core/rows)  {:id 147 :ruby "Set#+" :clj "clojure.core/concat"})))
 
 (deftest all-records-have-required-fields
   (is (=

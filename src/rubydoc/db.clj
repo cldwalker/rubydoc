@@ -68,7 +68,7 @@
   :clj "clojure.core/with-open",
   :desc
   "with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined. See clojure.core/spit for a quick way to write to a file."}
- {:ruby "IO.read and Kernel#open from open-uri stdlib",
+ {:ruby ["IO.read" "Kernel#open from open-uri stdlib"],
   :clj "clojure.core/slurp",
   :desc
   "slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls."}
@@ -92,7 +92,7 @@
   :clj "System/getProperties",
   :desc "A comprehensive map of system and language information."}
  {:ruby "Dir.home", :clj "(System/getProperty \"user.home\")"}
- {:ruby "$: or $LOAD_PATH",
+ {:ruby ["$:" "$LOAD_PATH"],
   :clj "(seq (.getURLs (ClassLoader/getSystemClassLoader)))",
   :desc
   "These are the loaded loadpaths/classpaths available in your runtime. While in ruby you can just add to this array, clojure will be disallowing this soon - see deprecated clojure.core/add-classpath."}
@@ -100,11 +100,11 @@
   :clj "$CLASSPATH",
   :desc
   "These environment variables can be manipulated before invoking a program to modify its loadpath/classpath."}
- {:ruby "STDIN or $stdin", :clj "*in*"
+ {:ruby ["STDIN" "$stdin"], :clj "*in*"
   :desc "*in* is thread local and used by clojure while System/in is global and used by java internals."}
- {:ruby "STDOUT or $stdout", :clj "*out*"
+ {:ruby ["STDOUT" "$stdout"], :clj "*out*"
   :desc "*out* is thread local and used by clojure while System/out is global and used by java internals."}
- {:ruby "STDERR or $stderr", :clj "*err*"
+ {:ruby ["STDERR" "$stderr"], :clj "*err*"
   :desc "*err* is thread local and used by clojure while System/err is global and used by java internals."}
  {:ruby "_",
   :clj "*1",
@@ -145,18 +145,18 @@
   :desc
   "Generates a function given a function. Given the ruby example \"proc {|x,y,z| p x,y,z }.curry[2][1,3]\", the clojure equivalent is \"((partial #(prn %1 %2 %3) 2) 1 3)\". Note that the ruby version doesn't let you populate default args until you call #[] while the clojure one requires at least arg to populate the new function."}
  {:ruby
-  "Proc#source_location or Method#source_location or UnboundMethod#source_location",
+  ["Proc#source_location" "Method#source_location" "UnboundMethod#source_location"],
   :clj "clojure.repl/source",
   :similar true,
   :desc
   "Whereas the clojure version prints the given function for you, the ruby one only tells you where it starts."}
  {:ruby
-  "Proc#parameters or Method#parameters or UnboundMethod#parameters",
+  ["Proc#parameters" "Method#parameters" "UnboundMethod#parameters"],
   :clj "(first ((meta #'fn-name) :arglists))",
   :desc
-  "Returns arguments for given method/function. The ruby version an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest."}
+  "Returns arguments for given method/function. The ruby version returns an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest."}
  {:ruby "Array#slice(1..-1)", :clj "clojure.core/rest"}
- {:ruby "Hash#[] or Hash#fetch",
+ {:ruby ["Hash#[]" "Hash#fetch"],
   :clj "clojure.core/get",
   :desc
   "Like fetch, get can take a default value if the key doesn't exist for the map/hash. Unlike fetch, get doesn't fail if a given key isn't found."}
@@ -173,8 +173,9 @@
  {:ruby "Hash#delete",
   :clj "clojure.core/dissoc",
   :desc "dissoc can also delete multiple keys."}
- {:ruby "Enumerable#reduce or Enumerable#inject", :clj "clojure.core/reduce"}
- {:ruby "Enumerable#map or Enumerable#collect",
+ {:ruby ["Enumerable#reduce" "Enumerable#inject"],
+  :clj "clojure.core/reduce"}
+ {:ruby ["Enumerable#map" "Enumerable#collect"],
   :clj "clojure.core/map",
   :desc
   "The clojure version can take multiple collections and pass as them additional args while the ruby version can only take one array."}
@@ -192,11 +193,11 @@
   :clj "clojure.string/split",
   :desc
   "The ruby version can split on string or regexp while the clojure version only does regexp."}
- {:ruby "String#+ or String#<<",
+ {:ruby ["String#+" "String#<<"],
   :clj "clojure.core/str",
   :desc
   "Clojure version handles multiple arguments. While ruby version doesnt offer this, it does have interpolation \"#{one} and #{two}\" vs (str one \" and \" two)."}
- {:ruby "String#% or Kernel#sprintf", :clj "clojure.core/format"}
+ {:ruby ["String#%" "Kernel#sprintf"], :clj "clojure.core/format"}
  {:ruby "String#sub", :clj "clojure.string/replace-first"}
  {:ruby "String#gsub", :clj "clojure.string/replace"}
  {:ruby "String#slice(offset, count)",
@@ -214,14 +215,14 @@
  {:ruby "String#rstrip", :clj "clojure.string/trimr"}
  {:ruby "String#split", :clj "clojure.string/split-lines"}
  {:ruby "String#reverse", :clj "clojure.string/reverse"}
- {:ruby "Array#include? or Enumerable#include?",
+ {:ruby ["Array#include?" "Enumerable#include?"],
   :clj "(some #{element} [1 2 element])",
   :similar true,
   :desc
   "Given a ruby example of \"[1,2,3].include?(1)\", the clojure equivalent is \"(some #{1} [1 2 3])\". Note the clojure version doesn't return a boolean but the element if found."}
  {:ruby "Object#blank? in activesupport gem",
   :clj "clojure.string/blank?"}
- {:ruby "Enumerable#zip or Array#zip",
+ {:ruby ["Enumerable#zip" "Array#zip"],
   :clj "clojure.core/interleave",
   :similar true,
   :desc
@@ -240,7 +241,7 @@
   :clj "clojure.core/cons",
   :desc
   "See also clojure.core/conj which does this for lists but with arguments reversed."}
- {:ruby "Enumerable#find_all or Enumerable#select or Enumerable#delete_if",
+ {:ruby ["Enumerable#find_all" "Enumerable#select" "Enumerable#delete_if"],
   :clj "clojure.core/filter"
   :desc "delete_if is the same as filter since they both return values filter by the function/block. delete_if has side effects which aren't possible in the clojure version."}
  {:ruby "Enumerable#sort", :clj "clojure.core/sort"}
@@ -263,7 +264,7 @@
  {:ruby "Array#concat",
   :clj "clojure.core/concat",
   :desc "Clojure version can take multiple collections. See also clojure.core/into which adds collections but in different orders depending on the data structure."}
- {:ruby "Array#flatten or Hash#flatten",
+ {:ruby ["Array#flatten" "Hash#flatten"],
   :clj "clojure.core/flatten",
   :desc "Ruby version can flatten to a given level."}
  {:ruby "MiniTest::Assertions#assert from minitest stdlib",
@@ -281,7 +282,7 @@
   :clj "java.net.URLDecoder/decode"}
  {:ruby "Kernel#warn",
   :clj "(binding [*out* *err*] (println \"FAILED!\"))"}
- {:ruby "File.delete or FileUtils.rm",
+ {:ruby ["File.delete" "FileUtils.rm"],
   :clj "clojure.java.io/delete-file"}
  {:ruby "Dir.entries",
   :clj "(-> (clojure.java.io/file \"DIRECTORY\") .list vec)"}
@@ -303,13 +304,13 @@
   :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}
  {:ruby "Set#-" :clj "clojure.set/difference"}
  {:ruby "Set#superset?" :clj "clojure.set/superset?"}
- {:ruby "Set#union or Set#|" :clj "clojure.set/union"}
- {:ruby "Set#intersection or Set#&" :clj "clojure.set/intersection"}
+ {:ruby ["Set#union" "Set#|"] :clj "clojure.set/union"}
+ {:ruby ["Set#intersection" "Set#&"] :clj "clojure.set/intersection"}
  {:ruby "Set#subset?" :clj "clojure.set/subset?"}
- {:ruby "Set#add or Set#+" :clj "clojure.core/concat"}
+ {:ruby ["Set#add" "Set#+"] :clj "clojure.core/concat"}
  {:ruby "Set#classify" :clj "clojure.set/index"
   :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}
- {:ruby "Range#new or Integer#step" :clj "clojure.core/range"}
+ {:ruby ["Range#new" "Integer#step"] :clj "clojure.core/range"}
  {:ruby "Kernel#trap" :clj "clojure.repl/set-break-handler!"
   :similar true
   :desc "The clojure version only handles the INT signal. 'source clojure.repl/set-break-handler!' to see how to trap other signals."}
@@ -318,12 +319,12 @@
  {:ruby "Hash#values_at" :clj "clojure.core/juxt"
   :similar true
   :desc "Given a ruby example of '{a: 1, b:2}.values_at(:a, :b)', the clojure equivalent is '((juxt :a :b) {:a 1 :b 2})'."}
- {:ruby "Enumerable#to_a or Kernel#Array" :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"}
+ {:ruby ["Enumerable#to_a" "Kernel#Array"] :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"}
  {:ruby "Enumerable#none?" :clj "(comp zero? count filter)"}
  {:ruby "Enumerable#one?" :clj "(comp #(= 1 %) count filter)"}
- {:ruby "Enumerable#min or Enumerable#min_by" :clj "clojure.core/min"
+ {:ruby ["Enumerable#min" "Enumerable#min_by"] :clj "clojure.core/min"
   :desc "See clojure.core/min-key to get the block functionality that min has."}
- {:ruby "Enumerable#max or Enumerable#max_by" :clj "clojure.core/max"
+ {:ruby ["Enumerable#max" "Enumerable#max_by"] :clj "clojure.core/max"
   :desc "See clojure.core/max-key to get the block functionality that max has."}
  {:ruby "Enumerable#each_slice" :clj "clojure.core/partition-all"
   :desc "Given the ruby example '(0..4).each_slice(2).to_a', the clojure equivalent is '(partition-all 2 (range 0 5))'."}

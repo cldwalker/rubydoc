@@ -53,5 +53,8 @@
     (->>
       (slurp (io/resource "rubydoc/db.clj"))
       read-string
+      (mapcat (fn [{:keys [ruby] :as record}]
+                (let [rubies (if (vector? ruby) ruby [ruby])]
+                (map #(assoc record :ruby %) rubies))))
       (map-indexed #(assoc %2 :id %1))
       vec)))
