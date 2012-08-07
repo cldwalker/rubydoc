@@ -155,7 +155,7 @@
   :clj "(first ((meta #'fn-name) :arglists))",
   :desc
   "Returns arguments for given method/function. The ruby version returns an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest."}
- {:ruby "Array#slice(1..-1)", :clj "clojure.core/rest"}
+ {:ruby "[1,2,3].slice(1..-1)", :clj "clojure.core/rest"}
  {:ruby ["Hash#[]" "Hash#fetch"],
   :clj "clojure.core/get",
   :desc
@@ -296,7 +296,7 @@
   :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
  {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}
  {:ruby "Enumerable#shuffle" :clj "clojure.core/shuffle"}
- {:ruby "Enumerable#cycle" :clj "clojure.core/cycle"}
+ {:ruby ["Enumerable#cycle", "Array#*"] :clj "clojure.core/cycle"}
  {:ruby "Enumerable#each_with_object" :clj "clojure.core/reduce"
   :similar true
   :desc "each_with_object is a specialized reduce that doesn't care what the return value of the reducing function is. Given the ruby example '[:a, :b, :c].each_with_object({}) {|a,b| b[a] = 1 }', the equivalent clojure '(reduce #(assoc %1 %2 1) {} [:a :b :c])'."}
@@ -320,7 +320,7 @@
   :similar true
   :desc "Given a ruby example of '{a: 1, b:2}.values_at(:a, :b)', the clojure equivalent is '((juxt :a :b) {:a 1 :b 2})'."}
  {:ruby ["Enumerable#to_a" "Kernel#Array"] :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"}
- {:ruby "Enumerable#none?" :clj "(comp zero? count filter)"}
+ {:ruby "Enumerable#none?" :clj "clojure.core/not-any?"}
  {:ruby "Enumerable#one?" :clj "(comp #(= 1 %) count filter)"}
  {:ruby ["Enumerable#min" "Enumerable#min_by"] :clj "clojure.core/min"
   :desc "See clojure.core/min-key to get the block functionality that min has."}
@@ -328,13 +328,24 @@
   :desc "See clojure.core/max-key to get the block functionality that max has."}
  {:ruby "Enumerable#each_slice" :clj "clojure.core/partition-all"
   :desc "Given the ruby example '(0..4).each_slice(2).to_a', the clojure equivalent is '(partition-all 2 (range 0 5))'."}
- {:ruby "Enumerable#each_enum" :clj "clojure.core/partition"
+ {:ruby "Enumerable#each_cons" :clj "clojure.core/partition"
   :desc "Clojure version is more general as it handles steps and padding. Given the ruby example '(0..4).each_cons(2).to_a', the clojure equivalent is '(partition 2 1 (range 0 5))'."}
  {:ruby "Enumerable#chunk" :clj "clojure.core/partition-by"
   :similar true
   :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
  {:ruby "Time.now" :clj "System/currentTimeMillis"
   :desc "See also System/nanoTime."}
- {:ruby "Set.new" :clj "clojure.core/set"}
+ {:ruby ["Set.new", "Enumerable#to_set"] :clj "clojure.core/set"}
  {:ruby "Set#member?" :clj "(#{1 2 3} 1)"
-  :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}]
+  :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}
+ {:ruby "Kernel#rand" :clj "clojure.core/rand or clojure.core/rand-int"}
+ {:ruby "Array#sample" :clj "clojure.core/rand-nth"}
+ {:ruby ["Enumerable#reverse_each" "Array#reverse"] :clj "clojure.core/reverse or clojure.core/rseq"}
+ {:ruby "Array#&" :clj "clojure.set/intersection"}
+ {:ruby "Array#-" :clj "clojure.set/difference"}
+ {:ruby ["Enumerable#<=>" "Comparable#<=>"] :clj "clojure.core/compare" :desc "While the ruby modules don't actually implement the spacheship method, they are the reasons why several ruby core classes implement them i.e. Object, Array, Hash, Module, String."}
+ {:ruby ["Array#empty?" "Hash#empty?" "String#empty?"] :clj "clojure.core/empty?"}
+ {:ruby "Object#hash" :clj "clojure.core/hash"}
+ {:ruby "Array#slice" :clj "clojure.core/subvec"
+  :desc "While slice's second argument specifies length of the sliced data structure, subvec's second argument specifies the index for the ending element."}
+ {:ruby "Array#|" :clj "clojure.set/union"}]
