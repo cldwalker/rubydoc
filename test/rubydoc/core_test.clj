@@ -5,8 +5,8 @@
 (defn unindent [string]
   (str (clojure.string/replace (clojure.string/trim string) #"\n\s*" "\n") "\n"))
 
-(deftest prints-message-for-no-matches
-  (is (= "No matches found.\n"
+(deftest prints-message-for-no-records
+  (is (= "No records found.\n"
       (with-out-str (rubydoc "blarg")))))
 
 (deftest prints-table-for-one-match
@@ -42,7 +42,7 @@
          (binding [table.width/*width* (delay 150)]
            (rubydoc "respond_to"))))))
 
-(deftest prints-table-for-regex-query-with-multiple-matches
+(deftest prints-table-for-regex-query-with-multiple-records
   (is (=
       (unindent
         "
@@ -101,26 +101,26 @@
 
 (deftest returns-no-result-for-record-number
   (is (=
-      "No matches found.\n"
+      "No records found.\n"
       (with-out-str (rubydoc -1)))))
 
 (deftest records-with-multiple-rubies-expand-with-duplicated-fields
-  (is ((set @@#'rubydoc.core/rows)  {:id 147 :ruby "Set#add" :clj "clojure.core/concat"}))
-  (is ((set @@#'rubydoc.core/rows)  {:id 148 :ruby "Set#+" :clj "clojure.core/concat"})))
+  (is ((set @@#'rubydoc.core/records)  {:id 147 :ruby "Set#add" :clj "clojure.core/concat"}))
+  (is ((set @@#'rubydoc.core/records)  {:id 148 :ruby "Set#+" :clj "clojure.core/concat"})))
 
 (deftest all-records-have-required-fields
   (is (=
-      '() (->> @@#'rubydoc.core/rows (remove #(and (contains? % :ruby) (contains? % :clj)))))))
+      '() (->> @@#'rubydoc.core/records (remove #(and (contains? % :ruby) (contains? % :clj)))))))
 
 (deftest all-descriptions-end-in-a-period
   (is (=
-      '() (->> @@#'rubydoc.core/rows (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
+      '() (->> @@#'rubydoc.core/records (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
 
 (deftest all-clojure-functions-resolve
   (is
     (=
       '()
-      (->> @@#'rubydoc.core/rows
+      (->> @@#'rubydoc.core/records
            (map :clj)
            (filter #(re-find #"^clojure\.\S+/\S+$" %))
            (map symbol)
