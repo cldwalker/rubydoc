@@ -20,12 +20,10 @@
                        #(re-find query (str %))
                        #(.contains (str %) (str query)))
             fields (cond
-                     (include? args :clj) [:clj]
-                     (include? args :all) [:ruby :clj :desc]
+                     (some #{:clj} args) [:clj]
+                     (some #{:all} args) [:ruby :clj :desc]
                      :else [:ruby])]
       (filter #(some matches? ((apply juxt fields) %)) @records)))))
-
-(defn- include? [v elem] (some #{elem} v))
 
 (defn- print-records [recs]
   (case (count recs)
