@@ -231,7 +231,7 @@
   :clj "clojure.core/get or clojure.core/nth",
   :desc
   "get is most like the ruby version as it returns nil for non-existent indices whereas nth will throw an error."}
- {:ruby "Enumerable#first", :clj "clojure.core/first"}
+ {:ruby ["Enumerable#first", "Array#shift"] :clj "clojure.core/first"}
  {:ruby "Enumerable#take", :clj "clojure.core/take"}
  {:ruby "Enumerable#drop", :clj "clojure.core/drop"}
  {:ruby "Enumerable#take-while", :clj "clojure.core/take-while"}
