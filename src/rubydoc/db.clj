@@ -348,4 +348,6 @@
  {:ruby "Object#hash" :clj "clojure.core/hash"}
  {:ruby "Array#slice" :clj "clojure.core/subvec"
   :desc "While slice's second argument specifies length of the sliced data structure, subvec's second argument specifies the index for the ending element."}
- {:ruby "Array#|" :clj "clojure.set/union"}]
+ {:ruby "Array#|" :clj "clojure.set/union"}
+ {:ruby "Hash#slice from activesupport gem" :clj "clojure.core/select-keys"}
+ {:ruby "Hash#except from activesupport gem" :clj "clojure.core/dissoc"}]
