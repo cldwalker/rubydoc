@@ -352,4 +352,8 @@
  {:ruby "Hash#slice from activesupport gem" :clj "clojure.core/select-keys"}
  {:ruby "Hash#except from activesupport gem" :clj "clojure.core/dissoc"}
  {:ruby "File.dirname" :clj "(.getParent (clojure.java.io/file some_file))"}
- {:ruby "FileUtils.mkdir_p" :clj "clojure.java.io/make-parents"}]
+ {:ruby "FileUtils.mkdir_p" :clj "clojure.java.io/make-parents"}
+ {:ruby "FileUtils.cp" :clj "org.apache.commons.io.FileUtils/copyFile"
+  :desc "The clojure version require files to be java.io.File instances."}
+ {:ruby "FileUtils.cp_r" :clj "org.apache.commons.io.FileUtils/copyDirectoryToDirectory"
+  :desc "The clojure version require files to be java.io.File instances."}]
