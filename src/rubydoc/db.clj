@@ -350,4 +350,6 @@
   :desc "While slice's second argument specifies length of the sliced data structure, subvec's second argument specifies the index for the ending element."}
  {:ruby "Array#|" :clj "clojure.set/union"}
  {:ruby "Hash#slice from activesupport gem" :clj "clojure.core/select-keys"}
- {:ruby "Hash#except from activesupport gem" :clj "clojure.core/dissoc"}]
+ {:ruby "Hash#except from activesupport gem" :clj "clojure.core/dissoc"}
+ {:ruby "File.dirname" :clj "(.getParent (clojure.java.io/file some_file))"}
+ {:ruby "FileUtils.mkdir_p" :clj "clojure.java.io/make-parents"}]
