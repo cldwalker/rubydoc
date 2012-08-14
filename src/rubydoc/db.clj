@@ -356,4 +356,6 @@
  {:ruby "FileUtils.cp" :clj "org.apache.commons.io.FileUtils/copyFile"
   :desc "The clojure version require files to be java.io.File instances."}
  {:ruby "FileUtils.cp_r" :clj "org.apache.commons.io.FileUtils/copyDirectoryToDirectory"
-  :desc "The clojure version require files to be java.io.File instances."}]
+  :desc "The clojure version require files to be java.io.File instances."}
+ {:ruby "Date.parse" :clj "(fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))"
+  :desc "The clojure version is a simpler version of the ruby one as an explicit format is required."}]
