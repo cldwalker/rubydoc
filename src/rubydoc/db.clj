@@ -241,8 +241,9 @@
   :clj "clojure.core/cons",
   :desc
   "See also clojure.core/conj which does this for lists but with arguments reversed."}
- {:ruby ["Enumerable#find_all" "Enumerable#select" "Enumerable#delete_if"],
-  :clj "clojure.core/filter"
+ {:ruby ["Enumerable#find_all" "Enumerable#select"],
+  :clj "clojure.core/filter"}
+ {:ruby "Enumerable#delete_if" :clj "clojure.core/filter"
   :desc "delete_if is the same as filter since they both return values filter by the function/block. delete_if has side effects which aren't possible in the clojure version."}
  {:ruby "Enumerable#sort", :clj "clojure.core/sort"}
  {:ruby "Enumerable#sort_by", :clj "clojure.core/sort-by"}
