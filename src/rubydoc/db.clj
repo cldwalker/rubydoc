@@ -359,4 +359,6 @@
  {:ruby "FileUtils.cp_r" :clj "org.apache.commons.io.FileUtils/copyDirectoryToDirectory"
   :desc "The clojure version require files to be java.io.File instances."}
  {:ruby "Date.parse" :clj "(fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))"
-  :desc "The clojure version is a simpler version of the ruby one as an explicit format is required."}]
+  :desc "The clojure version is a simpler version of the ruby one as an explicit format is required."}
+ {:ruby ["Array#index" "Array#find_index"] :clj "(.indexOf [])"
+  :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}]
