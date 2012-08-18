@@ -361,4 +361,6 @@
  {:ruby "Date.parse" :clj "(fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))"
   :desc "The clojure version is a simpler version of the ruby one as an explicit format is required."}
  {:ruby ["Array#index" "Array#find_index"] :clj "(.indexOf [])"
-  :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}]
+  :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}
+{:ruby "Object#present? in activesupport gem" :clj "clojure.core/seq"
+ :desc "seq is meant for more than just checking presence and returns truish/nil vs. true/false from the ruby version."}]
