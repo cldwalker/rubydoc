@@ -113,5 +113,5 @@ Note: tests aren't needed for db contributions
 ## Credits
 Thanks to @relevance fridays for time to start this!
 
-## TODO
-* Pick more comparisons up from https://gist.github.com/17283
+## Additional links
+* https://gist.github.com/17283 - A nice list of Array and Enumerable ruby/clojure comparisons
