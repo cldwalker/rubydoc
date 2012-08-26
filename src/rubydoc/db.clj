@@ -334,8 +334,8 @@
  {:ruby "Enumerable#chunk" :clj "clojure.core/partition-by"
   :similar true
   :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
- {:ruby "Time.now" :clj "System/currentTimeMillis"
-  :desc "See also System/nanoTime."}
+ {:ruby "Time.now" :clj "(java.util.Date.)"
+  :desc "See also System/nanoTime or System/currentTimeMillis."}
  {:ruby ["Set.new", "Enumerable#to_set"] :clj "clojure.core/set"}
  {:ruby "Set#member?" :clj "(#{1 2 3} 1)"
   :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}
@@ -358,9 +358,18 @@
   :desc "The clojure version require files to be java.io.File instances."}
  {:ruby "FileUtils.cp_r" :clj "org.apache.commons.io.FileUtils/copyDirectoryToDirectory"
   :desc "The clojure version require files to be java.io.File instances."}
- {:ruby "Date.parse" :clj "(fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))"
-  :desc "The clojure version is a simpler version of the ruby one as an explicit format is required."}
+ {:ruby "Date.parse" :clj "#inst \"2012-12-31\""
+  :desc "A more featureful clojure parser date is available via SimpleDateFormat. For example: (fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))."}
  {:ruby ["Array#index" "Array#find_index"] :clj "(.indexOf [])"
   :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}
-{:ruby "Object#present? in activesupport gem" :clj "clojure.core/seq"
- :desc "seq is meant for more than just checking presence and returns truish/nil vs. true/false from the ruby version."}]
+ {:ruby "Object#present? in activesupport gem" :clj "clojure.core/seq"
+  :desc "seq is meant for more than just checking presence and returns truish/nil vs. true/false from the ruby version."}
+ {:ruby "Float#ceil" :clj "Math/ceil"}
+ {:ruby "Float#floor" :clj "Math/floor"}
+ {:ruby "Fixnum#abs" :clj "Math/abs"}
+ {:ruby "Float#round" :clj "Math/round"}
+ {:ruby "Fixnum#**" :clj "Math/pow"
+  :desc "Raise a number to the power of another number."}
+ {:ruby ["Fixnum#%" "Fixnum#modulo"] :clj "clojure.core/mod"}
+ {:ruby "Fixnum#/" :clj "clojure.core/quot"}
+ {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"}]
