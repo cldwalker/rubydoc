@@ -120,3 +120,5 @@ Thanks to @relevance fridays for time to start this!
 
 ## Additional links
 * https://gist.github.com/17283 - A nice list of Array and Enumerable ruby/clojure comparisons
+* http://langref.org/clojure+ruby/files - Comparison by tackling specific problems. Clojure could be
+  more idiomatic.
