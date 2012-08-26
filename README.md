@@ -110,6 +110,11 @@ global variables, classes and libraries.
 
 Note: tests aren't needed for db contributions
 
+## Contributors
+
+Thanks to:
+* edtsech
+
 ## Credits
 Thanks to @relevance fridays for time to start this!
 
