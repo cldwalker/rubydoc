@@ -115,7 +115,8 @@
   :similar true,
   :desc
   "While ruby's is available to any program, the clojure one is only available in the repl."}
- {:ruby "String#to_i", :clj "(Integer. \"string\")"}
+ {:ruby "String#to_i", :clj "(Integer. \"string\")"
+  :desc "For clojure, see also Long/parseLong."}
  {:ruby "Integer#times",
   :clj "clojure.core/dotimes",
   :desc
@@ -372,4 +373,5 @@
   :desc "Raise a number to the power of another number."}
  {:ruby ["Fixnum#%" "Fixnum#modulo"] :clj "clojure.core/mod"}
  {:ruby "Fixnum#/" :clj "clojure.core/quot"}
- {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"}]
+ {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"}
+ {:ruby "String#to_f" :clj "java.lang.Float/parseFloat"}]
