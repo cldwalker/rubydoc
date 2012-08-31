@@ -308,14 +308,14 @@
   :desc "each_with_object is a specialized reduce that doesn't care what the return value of the reducing function is. Given the ruby example '[:a, :b, :c].each_with_object({}) {|a,b| b[a] = 1 }', the equivalent clojure '(reduce #(assoc %1 %2 1) {} [:a :b :c])'."}
  {:ruby "Enumerable#flat_map" :clj "(comp flatten map)"
   :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}
- {:ruby "Set#-" :clj "clojure.set/difference"}
- {:ruby "Set#superset?" :clj "clojure.set/superset?"}
- {:ruby ["Set#union" "Set#|"] :clj "clojure.set/union"}
- {:ruby ["Set#intersection" "Set#&"] :clj "clojure.set/intersection"}
- {:ruby "Set#subset?" :clj "clojure.set/subset?"}
- {:ruby ["Set#add" "Set#+"] :clj "clojure.core/concat"}
+ {:ruby "Set#-" :clj "clojure.set/difference" :ruby-lib "set"}
+ {:ruby "Set#superset?" :clj "clojure.set/superset?" :ruby-lib "set"}
+ {:ruby ["Set#union" "Set#|"] :clj "clojure.set/union" :ruby-lib "set"}
+ {:ruby ["Set#intersection" "Set#&"] :clj "clojure.set/intersection" :ruby-lib "set"}
+ {:ruby "Set#subset?" :clj "clojure.set/subset?" :ruby-lib "set"}
+ {:ruby ["Set#add" "Set#+"] :clj "clojure.core/concat" :ruby-lib "set"}
  {:ruby "Set#classify" :clj "clojure.set/index"
-  :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs."}
+  :desc "This is basically a group-by fn for sets. The ruby version is more generalized as it groups elements by the return val of its block while the clojure version groups by specified key/val pairs." :ruby-lib "set"}
  {:ruby ["Range.new" "Integer#step"] :clj "clojure.core/range"}
  {:ruby "Kernel#trap" :clj "clojure.repl/set-break-handler!"
   :similar true
@@ -341,8 +341,8 @@
   :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
  {:ruby "Time.now" :clj "(java.util.Date.)"
   :desc "See also System/nanoTime or System/currentTimeMillis."}
- {:ruby ["Set.new", "Enumerable#to_set"] :clj "clojure.core/set"}
- {:ruby "Set#member?" :clj "(#{1 2 3} 1)"
+ {:ruby ["Set.new", "Enumerable#to_set"] :clj "clojure.core/set" :ruby-lib "set"}
+ {:ruby "Set#member?" :clj "(#{1 2 3} 1)" :ruby-lib "set"
   :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}
  {:ruby "Kernel#rand" :clj "clojure.core/rand or clojure.core/rand-int"}
  {:ruby "Array#sample" :clj "clojure.core/rand-nth"}

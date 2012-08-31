@@ -120,8 +120,8 @@
       (with-out-str (rubydoc -1)))))
 
 (deftest records-with-multiple-rubies-expand-with-duplicated-fields
-  (is ((set (map #(dissoc % :id) @@#'rubydoc.core/records)) {:ruby "Set#add" :clj "clojure.core/concat"}))
-  (is ((set (map #(dissoc % :id) @@#'rubydoc.core/records)) {:ruby "Set#+" :clj "clojure.core/concat"})))
+  (is ((set (map #(dissoc % :id :ruby-lib) @@#'rubydoc.core/records)) {:ruby "Set#add" :clj "clojure.core/concat"}))
+  (is ((set (map #(dissoc % :id :ruby-lib) @@#'rubydoc.core/records)) {:ruby "Set#+" :clj "clojure.core/concat"})))
 
 (deftest all-records-have-required-fields
   (is (=
