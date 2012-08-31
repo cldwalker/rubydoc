@@ -99,6 +99,21 @@
         ")
       (with-out-str (rubydoc 0)))))
 
+(deftest returns-correct-ruby-result-for-ruby-lib-query
+  (is (=
+      (unindent
+        "
+        +-----------+-----------------------------+
+        | field     | value                       |
+        +-----------+-----------------------------+
+        | :id       | 130                         |
+        | :ruby     | Tempfile.new                |
+        | :ruby-lib | tempfile                    |
+        | :clj      | java.io.File/createTempFile |
+        +-----------+-----------------------------+
+        ")
+      (with-out-str (rubydoc "tempfile")))))
+
 (deftest returns-no-result-for-record-number
   (is (=
       "No records found.\n"

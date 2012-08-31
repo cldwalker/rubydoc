@@ -21,8 +21,8 @@
                        #(.contains (str %) (str query)))
             fields (cond
                      (some #{:clj} args) [:clj]
-                     (some #{:all} args) [:ruby :clj :desc]
-                     :else [:ruby])]
+                     (some #{:all} args) [:ruby :ruby-lib :clj :desc]
+                     :else [:ruby :ruby-lib])]
       (filter #(some matches? ((apply juxt fields) %)) @records)))))
 
 (defn- print-records [recs]

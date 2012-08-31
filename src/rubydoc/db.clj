@@ -18,7 +18,7 @@
  {:ruby "Kernel#print", :clj "clojure.core/print"}
  {:ruby "Kernel#pp",
   :clj "clojure.pprint/pprint",
-  :desc "The ruby meth comes from requiring 'pp', a file in stdlib."}
+  :ruby-lib "pp"}
  {:ruby "Kernel#sleep", :clj "Thread/sleep"}
  {:ruby "Kernel#at_exit",
   :clj
@@ -68,10 +68,11 @@
   :clj "clojure.core/with-open",
   :desc
   "with-open is more general as it takes multiple objects to read and close and is open to any java object that has .close defined. See clojure.core/spit for a quick way to write to a file."}
- {:ruby ["IO.read" "Kernel#open from open-uri stdlib"],
+ {:ruby "IO.read" ,
   :clj "clojure.core/slurp",
   :desc
   "slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls."}
+ {:ruby "Kernel#open" :clj "clojure.core/slurp" :ruby-lib "open-uri" }
  {:ruby "IO.foreach", :clj "line-seq"}
  {:ruby "File.directory?",
   :clj "(.isDirectory (clojure.java.io/file some_file))"}
@@ -125,15 +126,17 @@
   :clj "clojure.core/repeat",
   :desc
   "Given the ruby example which generates a vector of 5 3's - \"Array.new(5, 3)\", the clojure equivalent would be \"(repeat 5 3)\"."}
- {:ruby "Benchmark.measure from benchmark stdlib",
+ {:ruby "Benchmark.measure",
   :clj "clojure.core/time",
+  :ruby-lib "benchmark",
   :desc "Prints time taken for given code to run."}
  {:ruby "Struct.new",
   :clj "clojure.core/defstruct",
   :desc
   "Given this ruby example \"Person = Struct.new(:name, :age); Person.new('Bo', 8)\", the clojure equivalent would be '(defstruct person :name :age) (struct person \"Bo\" 8)'."}
- {:ruby "ActiveSupport/Memoizable#memoize from activesupport gem",
+ {:ruby "ActiveSupport/Memoizable#memoize",
   :clj "memoize",
+  :ruby-lib "activesupport",
   :desc "Memoizes a function based on arguments."}
  {:ruby
   "ObjectSpace.each_object(Module).to_a - ObjectSpace.each_object(Class).to_a",
@@ -221,7 +224,8 @@
   :similar true,
   :desc
   "Given a ruby example of \"[1,2,3].include?(1)\", the clojure equivalent is \"(some #{1} [1 2 3])\". Note the clojure version doesn't return a boolean but the element if found."}
- {:ruby "Object#blank? in activesupport gem",
+ {:ruby "Object#blank?",
+  :ruby-lib "activesupport",
   :clj "clojure.string/blank?"}
  {:ruby ["Enumerable#zip" "Array#zip"],
   :clj "clojure.core/interleave",
@@ -269,7 +273,7 @@
  {:ruby ["Array#flatten" "Hash#flatten"],
   :clj "clojure.core/flatten",
   :desc "Ruby version can flatten to a given level."}
- {:ruby "MiniTest::Assertions#assert from minitest stdlib",
+ {:ruby "MiniTest::Assertions#assert", :ruby-lib "minitest/unit",
   :clj "clojure.core/assert"}
  {:ruby "Array#<<", :clj "clojure.core/conj"
   :desc "conj adds to a collection in the most efficient way possible for a data structure. For lists this means prepending and for vectors it means appending."}
@@ -278,9 +282,9 @@
   :desc
   "Since clojure regexps can't interpolate symbols as in ruby, use this to generate a string that converts to a regexp."}
  {:ruby "Enumerable#group_by", :clj "clojure.core/group-by"}
- {:ruby "URI.encode from uri stdlib",
+ {:ruby "URI.encode", :ruby-lib "uri",
   :clj "java.net.URLEncoder/encode"}
- {:ruby "URI.decode from uri stdlib",
+ {:ruby "URI.decode", :ruby-lib "uri",
   :clj "java.net.URLDecoder/decode"}
  {:ruby "Kernel#warn",
   :clj "(binding [*out* *err*] (println \"FAILED!\"))"}
@@ -288,7 +292,7 @@
   :clj "clojure.java.io/delete-file"}
  {:ruby "Dir.entries",
   :clj "(-> (clojure.java.io/file \"DIRECTORY\") .list vec)"}
- {:ruby "Tempfile.new from tempfile stdlib",
+ {:ruby "Tempfile.new", :ruby-lib "tempfile",
   :clj "java.io.File/createTempFile"}
  {:ruby "File::Separator", :clj "java.io.File/separator"}
  {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version"}
@@ -351,8 +355,8 @@
  {:ruby "Array#slice" :clj "clojure.core/subvec"
   :desc "While slice's second argument specifies length of the sliced data structure, subvec's second argument specifies the index for the ending element."}
  {:ruby "Array#|" :clj "clojure.set/union"}
- {:ruby "Hash#slice from activesupport gem" :clj "clojure.core/select-keys"}
- {:ruby "Hash#except from activesupport gem" :clj "clojure.core/dissoc"}
+ {:ruby "Hash#slice" :ruby-lib "activesupport" :clj "clojure.core/select-keys"}
+ {:ruby "Hash#except" :ruby-lib "activesupport" :clj "clojure.core/dissoc"}
  {:ruby "File.dirname" :clj "(.getParent (clojure.java.io/file some_file))"}
  {:ruby "FileUtils.mkdir_p" :clj "clojure.java.io/make-parents"}
  {:ruby "FileUtils.cp" :clj "org.apache.commons.io.FileUtils/copyFile"
@@ -363,7 +367,7 @@
   :desc "A more featureful clojure parser date is available via SimpleDateFormat. For example: (fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))."}
  {:ruby ["Array#index" "Array#find_index"] :clj "(.indexOf [])"
   :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}
- {:ruby "Object#present? in activesupport gem" :clj "clojure.core/seq"
+ {:ruby "Object#present?" :ruby-lib "activesupport" :clj "clojure.core/seq"
   :desc "seq is meant for more than just checking presence and returns truish/nil vs. true/false from the ruby version."}
  {:ruby "Float#ceil" :clj "Math/ceil"}
  {:ruby "Float#floor" :clj "Math/floor"}
