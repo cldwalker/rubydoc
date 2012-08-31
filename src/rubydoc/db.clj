@@ -1,4 +1,4 @@
-[{:ruby "Open3.capture3", :clj "clojure.java.shell/sh"}
+[{:ruby "Open3.capture3", :clj "clojure.java.shell/sh", :ruby-lib "open3"}
  {:ruby "Kernel#system",
   :clj "clojure.java.shell/sh",
   :similar true,

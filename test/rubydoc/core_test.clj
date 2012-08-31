@@ -89,13 +89,14 @@
   (is (=
       (unindent
         "
-        +-------+-----------------------+
-        | field | value                 |
-        +-------+-----------------------+
-        | :id   | 0                     |
-        | :ruby | Open3.capture3        |
-        | :clj  | clojure.java.shell/sh |
-        +-------+-----------------------+
+        +-----------+-----------------------+
+        | field     | value                 |
+        +-----------+-----------------------+
+        | :id       | 0                     |
+        | :ruby     | Open3.capture3        |
+        | :clj      | clojure.java.shell/sh |
+        | :ruby-lib | open3                 |
+        +-----------+-----------------------+
         ")
       (with-out-str (rubydoc 0)))))
 
