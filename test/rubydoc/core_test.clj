@@ -55,37 +55,8 @@
         ")
       (with-out-str (rubydoc #"Kernel#[el]")))))
 
-(deftest returns-correct-result-when-searching-clojure-field
-  (is (=
-      (unindent
-        "
-        +-------+-----------------------------------------------------------------------------------+
-        | field | value                                                                             |
-        +-------+-----------------------------------------------------------------------------------+
-        | :id   | 104                                                                               |
-        | :ruby | Array#unshift                                                                     |
-        | :clj  | clojure.core/cons                                                                 |
-        | :desc | See also clojure.core/conj which does this for lists but with arguments reversed. |
-        +-------+-----------------------------------------------------------------------------------+
-        ")
-      (with-out-str (rubydoc "cons" :clj)))))
 
-(deftest returns-correct-result-when-searching-all-fields
-  (is (=
-      (unindent
-        "
-        +-------+------------------------------------------------------------------+
-        | field | value                                                            |
-        +-------+------------------------------------------------------------------+
-        | :id   | 17                                                               |
-        | :ruby | Symbol#to_s                                                      |
-        | :clj  | clojure.core/name                                                |
-        | :desc | Use when wanting to stringify a clojure keyword aka ruby symbol. |
-        +-------+------------------------------------------------------------------+
-        ")
-      (with-out-str (rubydoc "aka ruby" :all)))))
-
-(deftest returns-correct-result-for-record-number
+(deftest prints-correct-result-for-record-number
   (is (=
       (unindent
         "
@@ -101,44 +72,41 @@
         ")
       (with-out-str (rubydoc 0)))))
 
+(deftest prints-no-result-for-record-number
+  (is (=
+      "No records found.\n"
+      (with-out-str (rubydoc -1)))))
+
+(deftest returns-correct-result-for-clj-option
+  (is (=
+      '("clojure.core/cons")
+      (map :clj (rubydoc "cons" :clj :raw)))))
+
+(deftest returns-correct-result-for-all-option
+  (is (=
+        '("Symbol#to_s")
+        (map :ruby (rubydoc "aka ruby" :all :raw)))))
+
 (deftest returns-raw-results-for-raw-option
   (is (=
     [{:id 30, :ruby "ENV", :clj "System/getenv",
       :desc "To get specific env values, pass the env name to getenv."}]
     (rubydoc "ENV" :raw))))
 
-(deftest returns-correct-ruby-result-for-ruby-lib-query
+(deftest returns-correct-ruby-result-for-ruby-lib-option
   (is (=
-      (unindent
-        "
-        +-----------+-----------------------------+
-        | field     | value                       |
-        +-----------+-----------------------------+
-        | :id       | 130                         |
-        | :ruby     | Tempfile.new                |
-        | :ruby-lib | tempfile                    |
-        | :clj      | java.io.File/createTempFile |
-        +-----------+-----------------------------+
-        ")
-      (with-out-str (rubydoc "tempfile")))))
+        '("Tempfile.new")
+        (map :ruby (rubydoc "tempfile" :raw)))))
 
-(deftest returns-correct-ruby-result-for-type
+(deftest returns-correct-ruby-result-for-type-option
   (is (=
-        (unindent
-          "
-          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
-          | id  | ruby            | clj                  | type    | desc                                                                                      |
-          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
-          | 13  | Class.new       | new                  | keyword | Given a ruby example \"Klass.new(arg)\", the clojure equivalent is \"(new Klass arg) or (... |
-          | 134 | =begin and =end | clojure.core/comment | keyword | Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of... |
-          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
-          ")
-        (with-out-str (binding [table.width/*width* (delay 150)] (rubydoc "keyword" :type))))))
+        '("new" "clojure.core/comment")
+        (map :clj (rubydoc "keyword" :type :raw)))))
 
-(deftest returns-no-result-for-record-number
+(deftest records-without-type-default-to-fn
   (is (=
-      "No records found.\n"
-      (with-out-str (rubydoc -1)))))
+        "fn"
+        (->> (rubydoc 0 :raw) (map :type) first))))
 
 (deftest records-with-multiple-rubies-expand-with-duplicated-fields
   (is ((set (map #(dissoc % :id :ruby-lib :type) @@#'rubydoc.core/records)) {:ruby "Set#add" :clj "clojure.core/concat"}))
