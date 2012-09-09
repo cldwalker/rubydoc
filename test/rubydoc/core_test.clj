@@ -93,6 +93,7 @@
         | field     | value                 |
         +-----------+-----------------------+
         | :id       | 0                     |
+        | :type     | fn                    |
         | :ruby     | Open3.capture3        |
         | :clj      | clojure.java.shell/sh |
         | :ruby-lib | open3                 |
@@ -115,14 +116,27 @@
         ")
       (with-out-str (rubydoc "tempfile")))))
 
+(deftest returns-correct-ruby-result-for-type
+  (is (=
+        (unindent
+          "
+          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
+          | id  | ruby            | clj                  | type    | desc                                                                                      |
+          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
+          | 13  | Class.new       | new                  | keyword | Given a ruby example \"Klass.new(arg)\", the clojure equivalent is \"(new Klass arg) or (... |
+          | 134 | =begin and =end | clojure.core/comment | keyword | Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of... |
+          +-----+-----------------+----------------------+---------+-------------------------------------------------------------------------------------------+
+          ")
+        (with-out-str (binding [table.width/*width* (delay 150)] (rubydoc "keyword" :type))))))
+
 (deftest returns-no-result-for-record-number
   (is (=
       "No records found.\n"
       (with-out-str (rubydoc -1)))))
 
 (deftest records-with-multiple-rubies-expand-with-duplicated-fields
-  (is ((set (map #(dissoc % :id :ruby-lib) @@#'rubydoc.core/records)) {:ruby "Set#add" :clj "clojure.core/concat"}))
-  (is ((set (map #(dissoc % :id :ruby-lib) @@#'rubydoc.core/records)) {:ruby "Set#+" :clj "clojure.core/concat"})))
+  (is ((set (map #(dissoc % :id :ruby-lib :type) @@#'rubydoc.core/records)) {:ruby "Set#add" :clj "clojure.core/concat"}))
+  (is ((set (map #(dissoc % :id :ruby-lib :type) @@#'rubydoc.core/records)) {:ruby "Set#+" :clj "clojure.core/concat"})))
 
 (deftest all-records-have-required-fields
   (is (=

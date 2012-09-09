@@ -12,6 +12,7 @@
  {:ruby "Kernel#load", :clj "clojure.core/load-file"}
  {:ruby "__FILE__",
   :clj "*file*",
+  :type "constant"
   :desc
   "The ruby value is relative to the current directory and can just be expanded. The clojure value is relative to a classpath directory (not the current directory) and needs to be expanded with: (ClassLoader/getSystemResource *file*)."}
  {:ruby "Kernel#puts", :clj "clojure.core/println"}
@@ -24,11 +25,13 @@
   :clj
   "(.addShutdownHook (Runtime/getRuntime) fn-wrapped-in-a-thread)",
   :similar true,
+  :type "code",
   :desc
   "Whereas at_exits are run in the reverse order defined, multiple ShutdownHooks are run concurrently in an unspecified order."}
  {:ruby "Object#send",
   :clj "@#'namespace/meth",
   :similar true,
+  :type "code"
   :desc
   "To call private methods as send can, place the deref-ed Var in the function place i.e. (@#'meth arg1). To dynamically call a ruby variable as send can, convert your clojure symbol to a Var and deref. For example, if you had the function \"println\" as a string, convert the string into a function and execute it: (@(resolve (symbol \"println\")) \"WOOT\")."}
  {:ruby "Object#tap",
@@ -37,6 +40,7 @@
   "Both tap and doto take an object, act on it with a block/function and then pass on the original object. To compare, given this ruby example \"10.tap {|n| puts n } + 5\", the clojure equivalent is \"(-> 10 (doto println) (+ 5))\"."}
  {:ruby "Class.new",
   :clj "new",
+  :type "keyword"
   :desc
   "Given a ruby example \"Klass.new(arg)\", the clojure equivalent is \"(new Klass arg) or (Klass. arg)\"."}
  {:ruby "Object#instance_of?", :clj "clojure.core/instance?"}
@@ -75,48 +79,62 @@
  {:ruby "Kernel#open" :clj "clojure.core/slurp" :ruby-lib "open-uri" }
  {:ruby "IO.foreach", :clj "line-seq"}
  {:ruby "File.directory?",
-  :clj "(.isDirectory (clojure.java.io/file some_file))"}
+  :clj "(.isDirectory (clojure.java.io/file some_file))"
+  :type "code"}
  {:ruby "File.exists?",
-  :clj "(.exists (clojure.java.io/file some_file))"}
+  :clj "(.exists (clojure.java.io/file some_file))"
+  :type "code"}
  {:ruby "File.file?",
-  :clj "(.isFile (clojure.java.io/file some_file))"}
+  :clj "(.isFile (clojure.java.io/file some_file))"
+  :type "code"}
  {:ruby "Dir.glob",
   :clj
   "(defn glob [dir regex] (->> (clojure.java.io/file dir) (file-seq) (map str) (filter #(re-find regex %))))",
   :similar true,
+  :type "code"
   :desc
   "This is a simpler version of glob that fully descends a directory and matches files for the given regex."}
  {:ruby "ENV",
   :clj "System/getenv",
+  :type "constant",
   :desc "To get specific env values, pass the env name to getenv."}
  {:ruby "RbConfig::CONFIG",
   :clj "System/getProperties",
+  :type "constant",
   :desc "A comprehensive map of system and language information."}
- {:ruby "Dir.home", :clj "(System/getProperty \"user.home\")"}
+ {:ruby "Dir.home", :clj "(System/getProperty \"user.home\")" :type "code"}
  {:ruby ["$:" "$LOAD_PATH"],
   :clj "(seq (.getURLs (ClassLoader/getSystemClassLoader)))",
+  :type "variable",
   :desc
   "These are the loaded loadpaths/classpaths available in your runtime. While in ruby you can just add to this array, clojure will be disallowing this soon - see deprecated clojure.core/add-classpath."}
  {:ruby "$RUBYLIB",
   :clj "$CLASSPATH",
+  :type "variable"
   :desc
   "These environment variables can be manipulated before invoking a program to modify its loadpath/classpath."}
  {:ruby ["STDIN" "$stdin"], :clj "*in*"
+  :type "constant"
   :desc "*in* is thread local and used by clojure while System/in is global and used by java internals."}
  {:ruby ["STDOUT" "$stdout"], :clj "*out*"
+  :type "constant"
   :desc "*out* is thread local and used by clojure while System/out is global and used by java internals."}
  {:ruby ["STDERR" "$stderr"], :clj "*err*"
+  :type "constant"
   :desc "*err* is thread local and used by clojure while System/err is global and used by java internals."}
  {:ruby "_",
   :clj "*1",
+  :type "variable",
   :desc
   "These give back the returned value from the last statement in a repl. Clojure also has *2 and *3 for 2nd and 3rd to last values."}
  {:ruby "$!",
   :clj "*e",
+  :type "variable"
   :similar true,
   :desc
   "While ruby's is available to any program, the clojure one is only available in the repl."}
  {:ruby "String#to_i", :clj "(Integer. \"string\")"
+  :type "code"
   :desc "For clojure, see also Long/parseLong."}
  {:ruby "Integer#times",
   :clj "clojure.core/dotimes",
@@ -141,6 +159,7 @@
  {:ruby
   "ObjectSpace.each_object(Module).to_a - ObjectSpace.each_object(Class).to_a",
   :clj "clojure.core/all-ns",
+  :type "code"
   :similar true,
   :desc
   "If you think of ruby's modules as clojure namespaces, these two are equivalent. For the ruby example, Class objects were subtracted from Module objects since a Class is a Module."}
@@ -157,6 +176,7 @@
  {:ruby
   ["Proc#parameters" "Method#parameters" "UnboundMethod#parameters"],
   :clj "(first ((meta #'fn-name) :arglists))",
+  :type "code"
   :desc
   "Returns arguments for given method/function. The ruby version returns an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest."}
  {:ruby "[1,2,3].slice(1..-1)", :clj "clojure.core/rest"}
@@ -205,7 +225,8 @@
  {:ruby "String#sub", :clj "clojure.string/replace-first"}
  {:ruby "String#gsub", :clj "clojure.string/replace"}
  {:ruby "String#slice(offset, count)",
-  :clj "(.substring \"string\" offset count)"}
+  :clj "(.substring \"string\" offset count)",
+  :type "code"}
  {:ruby "String#scan",
   :clj "clojure.core/re-seq",
   :desc "Returns a list of all matches a regexp has against a string."}
@@ -222,6 +243,7 @@
  {:ruby ["Array#include?" "Enumerable#include?"],
   :clj "(some #{element} [1 2 element])",
   :similar true,
+  :type "code"
   :desc
   "Given a ruby example of \"[1,2,3].include?(1)\", the clojure equivalent is \"(some #{1} [1 2 3])\". Note the clojure version doesn't return a boolean but the element if found."}
  {:ruby "Object#blank?",
@@ -255,12 +277,14 @@
  {:ruby "Enumerable#reject", :clj "clojure.core/remove"}
  {:ruby "[].map.with_index",
   :clj "clojure.core/map-indexed",
+  :type "code"
   :desc
   "The clojure version takes the index and element while the ruby one has the arguments reversed."}
  {:ruby "Enumerable#all?", :clj "clojure.core/every?"}
  {:ruby "Enumerable#each", :clj "clojure.core/doseq"}
  {:ruby "Enumerable#any?",
   :clj "(some true? [1 2 3])",
+  :type "code"
   :desc
   "ruby version returns a boolean while the clojure one does not."}
  {:ruby "BasicObject#equal?",
@@ -278,7 +302,7 @@
  {:ruby "Array#<<", :clj "clojure.core/conj"
   :desc "conj adds to a collection in the most efficient way possible for a data structure. For lists this means prepending and for vectors it means appending."}
  {:ruby "Regexp.new",
-  :clj "re-pattern",
+  :clj "clojure.core/re-pattern",
   :desc
   "Since clojure regexps can't interpolate symbols as in ruby, use this to generate a string that converts to a regexp."}
  {:ruby "Enumerable#group_by", :clj "clojure.core/group-by"}
@@ -287,18 +311,21 @@
  {:ruby "URI.decode", :ruby-lib "uri",
   :clj "java.net.URLDecoder/decode"}
  {:ruby "Kernel#warn",
-  :clj "(binding [*out* *err*] (println \"FAILED!\"))"}
+  :clj "(binding [*out* *err*] (println \"FAILED!\"))",
+  :type "code"}
  {:ruby ["File.delete" "FileUtils.rm"], :ruby-lib "fileutils",
   :clj "clojure.java.io/delete-file"}
  {:ruby "Dir.entries",
-  :clj "(-> (clojure.java.io/file \"DIRECTORY\") .list vec)"}
+  :clj "(-> (clojure.java.io/file \"DIRECTORY\") .list vec)",
+  :type "code"}
  {:ruby "Tempfile.new", :ruby-lib "tempfile",
   :clj "java.io.File/createTempFile"}
- {:ruby "File::Separator", :clj "java.io.File/separator"}
- {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version"}
+ {:ruby "File::Separator", :clj "java.io.File/separator" :type "constant"}
+ {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version" :type "constant"}
  {:ruby "irb stdlib" :clj "clojure.main/repl"
   :desc "Clojure's is smaller but also more extendable."}
  {:ruby "=begin and =end" :clj "clojure.core/comment"
+  :type "keyword"
   :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
  {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}
  {:ruby "Enumerable#shuffle" :clj "clojure.core/shuffle"}
@@ -307,6 +334,7 @@
   :similar true
   :desc "each_with_object is a specialized reduce that doesn't care what the return value of the reducing function is. Given the ruby example '[:a, :b, :c].each_with_object({}) {|a,b| b[a] = 1 }', the equivalent clojure '(reduce #(assoc %1 %2 1) {} [:a :b :c])'."}
  {:ruby "Enumerable#flat_map" :clj "(comp flatten map)"
+  :type "code"
   :desc "Given a ruby example of '[1,2,3].flat_map {|e| [1, e] }', the clojure equivalent is '((comp flatten map) #(vec [1, %]) [1 2 3])'."}
  {:ruby "Set#-" :clj "clojure.set/difference" :ruby-lib "set"}
  {:ruby "Set#superset?" :clj "clojure.set/superset?" :ruby-lib "set"}
@@ -325,9 +353,10 @@
  {:ruby "Hash#values_at" :clj "clojure.core/juxt"
   :similar true
   :desc "Given a ruby example of '{a: 1, b:2}.values_at(:a, :b)', the clojure equivalent is '((juxt :a :b) {:a 1 :b 2})'."}
- {:ruby ["Enumerable#to_a" "Kernel#Array"] :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"}
+ {:ruby ["Enumerable#to_a" "Kernel#Array"] :clj "#(if-not (or (nil? %) (vector? %)) [%] (vec %))"
+  :type "code"}
  {:ruby "Enumerable#none?" :clj "clojure.core/not-any?"}
- {:ruby "Enumerable#one?" :clj "(comp #(= 1 %) count filter)"}
+ {:ruby "Enumerable#one?" :clj "(comp #(= 1 %) count filter)" :type "code"}
  {:ruby ["Enumerable#min" "Enumerable#min_by"] :clj "clojure.core/min"
   :desc "See clojure.core/min-key to get the block functionality that min has."}
  {:ruby ["Enumerable#max" "Enumerable#max_by"] :clj "clojure.core/max"
@@ -340,9 +369,11 @@
   :similar true
   :desc "While the clojure version does return a collections split by each time the return value of a function changes, it doesn't also return that return value or have the additional configurability that the ruby version has. Given the ruby version '[1,3,2].chunk {|n| n.even? }.to_a.map(&:second)', the clojure equivalent is '(partition-by even? [1 3 2])'."}
  {:ruby "Time.now" :clj "(java.util.Date.)"
+  :type "code"
   :desc "See also System/nanoTime or System/currentTimeMillis."}
  {:ruby ["Set.new", "Enumerable#to_set"] :clj "clojure.core/set" :ruby-lib "set"}
  {:ruby "Set#member?" :clj "(#{1 2 3} 1)" :ruby-lib "set"
+  :type "code"
   :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}
  {:ruby "Kernel#rand" :clj "clojure.core/rand or clojure.core/rand-int"}
  {:ruby "Array#sample" :clj "clojure.core/rand-nth"}
@@ -357,15 +388,17 @@
  {:ruby "Array#|" :clj "clojure.set/union"}
  {:ruby "Hash#slice" :ruby-lib "activesupport" :clj "clojure.core/select-keys"}
  {:ruby "Hash#except" :ruby-lib "activesupport" :clj "clojure.core/dissoc"}
- {:ruby "File.dirname" :clj "(.getParent (clojure.java.io/file some_file))"}
+ {:ruby "File.dirname" :clj "(.getParent (clojure.java.io/file some_file))" :type "code"}
  {:ruby "FileUtils.mkdir_p" :clj "clojure.java.io/make-parents", :ruby-lib "fileutils"}
  {:ruby "FileUtils.cp" :clj "org.apache.commons.io.FileUtils/copyFile" :ruby-lib "fileutils"
   :desc "The clojure version require files to be java.io.File instances."}
  {:ruby "FileUtils.cp_r" :clj "org.apache.commons.io.FileUtils/copyDirectoryToDirectory" :ruby-lib "fileutils"
   :desc "The clojure version require files to be java.io.File instances."}
  {:ruby "Date.parse" :clj "#inst \"2012-12-31\""
+  :type "code"
   :desc "A more featureful clojure parser date is available via SimpleDateFormat. For example: (fn [string] (.parse (java.text.SimpleDateFormat. \"yyyy-MM-dd\") string))."}
  {:ruby ["Array#index" "Array#find_index"] :clj "(.indexOf [])"
+  :type "code"
   :desc "Ruby version can take a block and returns nil if not element found. Clojure version returns -1 if element not found."}
  {:ruby "Object#present?" :ruby-lib "activesupport" :clj "clojure.core/seq"
   :desc "seq is meant for more than just checking presence and returns truish/nil vs. true/false from the ruby version."}
@@ -377,5 +410,6 @@
   :desc "Raise a number to the power of another number."}
  {:ruby ["Fixnum#%" "Fixnum#modulo"] :clj "clojure.core/mod"}
  {:ruby "Fixnum#/" :clj "clojure.core/quot"}
- {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"}
+ {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"
+  :type "code"}
  {:ruby "String#to_f" :clj "java.lang.Float/parseFloat"}]

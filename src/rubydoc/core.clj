@@ -22,8 +22,10 @@
             fields (cond
                      (some #{:clj} args) [:clj]
                      (some #{:all} args) [:ruby :ruby-lib :clj :desc]
-                     :else [:ruby :ruby-lib])]
-      (filter #(some matches? ((apply juxt fields) %)) @records)))))
+                     (some #{:type} args) [:type]
+                     :else [:ruby :ruby-lib])
+            recs (if (= fields [:type]) @records (map #(dissoc % :type) @records))]
+      (filter #(some matches? ((apply juxt fields) %)) recs)))))
 
 (defn- print-records [recs]
   (case (count recs)
@@ -54,5 +56,6 @@
       (mapcat (fn [{:keys [ruby] :as record}]
                 (let [rubies (if (vector? ruby) ruby [ruby])]
                 (map #(assoc record :ruby %) rubies))))
+      (map #(assoc % :type (or (:type %) "fn")))
       (map-indexed #(assoc %2 :id %1))
       vec)))
