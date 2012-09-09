@@ -103,7 +103,7 @@
 
 (deftest returns-correct-ruby-result-for-type-option
   (is (=
-        '("new" "clojure.core/comment")
+        '("new" "throw" "clojure.core/comment")
         (map :clj (rubydoc "keyword" :type :raw)))))
 
 (deftest records-without-type-default-to-fn
@@ -134,6 +134,13 @@
         (->> (rubydoc "fn" :type :raw)
           (map :ruby)
           (remove #(re-find #"^[A-Za-z:\d]+[#\.]\S+$" %))))))
+
+(deftest all-fn-types-have-consistent-clj-fns
+  (is (=
+        '()
+        (->> (rubydoc "fn" :type :raw)
+          (map :clj)
+          (remove #(re-find #"^[\w\.]+/\S+$" %))))))
 
 (deftest all-clojure-functions-resolve
   (is

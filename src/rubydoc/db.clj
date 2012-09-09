@@ -44,7 +44,7 @@
   :desc
   "Given a ruby example \"Klass.new(arg)\", the clojure equivalent is \"(new Klass arg) or (Klass. arg)\"."}
  {:ruby "Object#instance_of?", :clj "clojure.core/instance?"}
- {:ruby "Kernel#raise", :clj "throw"}
+ {:ruby "Kernel#raise", :clj "throw", :type "keyword"}
  {:ruby "Object#respond_to?",
   :clj "clojure.core/ns-resolve",
   :similar true,
@@ -59,7 +59,7 @@
   :similar true,
   :desc
   "If in a repl, pst will print the given or last exception's stacktrace. If in a program, use (.getStackTrace Exception). To get a useful stacktrace array, more work is required."}
- {:ruby "Exception#message", :clj "(.getMessage exception)"}
+ {:ruby "Exception#message", :clj "(.getMessage exception)", :type "code"}
  {:ruby "Module#include",
   :clj "clojure.core/refer",
   :desc
@@ -77,7 +77,7 @@
   :desc
   "slurp is a generalize read, reading anything java.io.Reader can read which includes files and urls."}
  {:ruby "Kernel#open" :clj "clojure.core/slurp" :ruby-lib "open-uri" }
- {:ruby "IO.foreach", :clj "line-seq"}
+ {:ruby "IO.foreach", :clj "clojure.core/line-seq"}
  {:ruby "File.directory?",
   :clj "(.isDirectory (clojure.java.io/file some_file))"
   :type "code"}
@@ -153,7 +153,7 @@
   :desc
   "Given this ruby example \"Person = Struct.new(:name, :age); Person.new('Bo', 8)\", the clojure equivalent would be '(defstruct person :name :age) (struct person \"Bo\" 8)'."}
  {:ruby "ActiveSupport::Memoizable#memoize",
-  :clj "memoize",
+  :clj "clojure.core/memoize",
   :ruby-lib "activesupport",
   :desc "Memoizes a function based on arguments."}
  {:ruby
@@ -255,9 +255,9 @@
   :desc
   "While the ruby version returns an array of zipped arrays, the clojure version returns a flattened array."}
  {:ruby "Array#[]",
-  :clj "clojure.core/get or clojure.core/nth",
+  :clj "clojure.core/get",
   :desc
-  "get is most like the ruby version as it returns nil for non-existent indices whereas nth will throw an error."}
+  "See clojure.core/nth for potential speed up but lookout as non-existent indices throw an error."}
  {:ruby ["Enumerable#first", "Array#shift"] :clj "clojure.core/first"}
  {:ruby "Enumerable#take", :clj "clojure.core/take"}
  {:ruby "Enumerable#drop", :clj "clojure.core/drop"}
@@ -328,7 +328,7 @@
  {:ruby "=begin and =end" :clj "clojure.core/comment"
   :type "keyword"
   :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
- {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])"}
+ {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])", :type "code"}
  {:ruby "Enumerable#shuffle" :clj "clojure.core/shuffle"}
  {:ruby ["Enumerable#cycle", "Array#*"] :clj "clojure.core/cycle"}
  {:ruby "Enumerable#each_with_object" :clj "clojure.core/reduce"
@@ -376,9 +376,11 @@
  {:ruby "Set#member?" :clj "(#{1 2 3} 1)" :ruby-lib "set"
   :type "code"
   :desc "The ruby version returns true/false while the clojure version returns the member if it exists in the set."}
- {:ruby "Kernel#rand" :clj "clojure.core/rand or clojure.core/rand-int"}
+ {:ruby "Kernel#rand" :clj "clojure.core/rand",
+  :desc "ruby version acts like rand by default. However if given an integer it acts like clojure.core/rand-int."}
  {:ruby "Array#sample" :clj "clojure.core/rand-nth"}
- {:ruby ["Enumerable#reverse_each" "Array#reverse"] :clj "clojure.core/reverse or clojure.core/rseq"}
+ {:ruby ["Enumerable#reverse_each" "Array#reverse"] :clj "clojure.core/reverse",
+  :desc "See clojure.core/rseq for a lazy version."}
  {:ruby "Array#&" :clj "clojure.set/intersection"}
  {:ruby "Array#-" :clj "clojure.set/difference"}
  {:ruby ["Enumerable#<=>" "Comparable#<=>"] :clj "clojure.core/compare" :desc "While the ruby modules don't actually implement the spacheship method, they are the reasons why several ruby core classes implement them i.e. Object, Array, Hash, Module, String."}
