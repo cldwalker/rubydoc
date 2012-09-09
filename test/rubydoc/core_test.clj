@@ -101,6 +101,12 @@
         ")
       (with-out-str (rubydoc 0)))))
 
+(deftest returns-raw-results-for-raw-option
+  (is (=
+    [{:id 30, :ruby "ENV", :clj "System/getenv",
+      :desc "To get specific env values, pass the env name to getenv."}]
+    (rubydoc "ENV" :raw))))
+
 (deftest returns-correct-ruby-result-for-ruby-lib-query
   (is (=
       (unindent

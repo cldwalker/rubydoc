@@ -10,8 +10,9 @@
   Options:
 
   :clj  Search clojure field.
-  :type Search type field.
-  :all  Search all ruby and clojure fields.
+  :type Search type field. Valid types are fn, constant, code, keyword and variable.
+  :all  Search description and all ruby and clojure fields.
+  :raw  Returns results instead of printing them.
   "
   [query & args]
   (print-records
@@ -26,13 +27,16 @@
                      (some #{:type} args) [:type]
                      :else [:ruby :ruby-lib])
             recs (if (= fields [:type]) @records (map #(dissoc % :type) @records))]
-      (filter #(some matches? ((apply juxt fields) %)) recs)))))
+      (filter #(some matches? ((apply juxt fields) %)) recs)))
+    (some #{:raw} args)))
 
-(defn- print-records [recs]
-  (case (count recs)
-    1 (->> (first recs) wrap-records (cons ["field" "value"]) table.core/table)
-    0 (println "No records found.")
-    (table.core/table recs)))
+(defn- print-records [recs raw]
+  (if raw
+    (vec recs)
+    (case (count recs)
+      1 (->> (first recs) wrap-records (cons ["field" "value"]) table.core/table)
+      0 (println "No records found.")
+      (table.core/table recs))))
 
 (defn- wrap-records [recs]
   (let [field-length (apply max (map (comp count str first) recs))
