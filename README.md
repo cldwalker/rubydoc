@@ -74,6 +74,18 @@ Let's search for ruby equivalents in clojure:
     +----------+-------------------------------------------------------------------------+
     nil
 
+    ; Pull up ruby methods by their library/gem
+    user=> (rubydoc "activesupport")
+    +-----+----------------------------------+--------------------------+---------------+----------------------------------------------------------------+
+    | id  | ruby                             | clj                      | ruby-lib      | desc                                                           |
+    +-----+----------------------------------+--------------------------+---------------+----------------------------------------------------------------+
+    | 49  | ActiveSupport::Memoizable#mem... | clojure.core/memoize     | activesupport | Memoizes a function based on arguments.                        |
+    | 93  | Object#blank?                    | clojure.string/blank?    | activesupport |                                                                |
+    | 186 | Hash#slice                       | clojure.core/select-keys | activesupport |                                                                |
+    | 187 | Hash#except                      | clojure.core/dissoc      | activesupport |                                                                |
+    | 195 | Object#present?                  | clojure.core/seq         | activesupport | seq is meant for more than just checking presence and retur... |
+    +-----+----------------------------------+--------------------------+---------------+----------------------------------------------------------------+
+
     ; What clojure functions have 'con' in them
     (rubydoc "con" :clj)
     +-----+---------------+------------------------+-----------------------------------------------------------------------------------+
@@ -94,8 +106,40 @@ Let's search for ruby equivalents in clojure:
     | :ruby    | Object#send                                                            |
     | :clj     | @#'namespace/meth                                                      |
     | :similar | true                                                                   |
+    | :type    | code                                                                   |
     | :desc    | To call private methods as send can, place the deref-ed Var in the ... |
     +----------+------------------------------------------------------------------------+
+
+    ; What records are of type "variable"?
+    user=> (rubydoc "variable" :type)
+    +----+------------+-------------------------------+----------+-------------------------------------------+---------+
+    | id | ruby       | clj                           | type     | desc                                      | similar |
+    +----+------------+-------------------------------+----------+-------------------------------------------+---------+
+    | 33 | $:         | (seq (.getURLs (ClassLoade... | variable | These are the loaded loadpaths/classpa... |         |
+    | 34 | $LOAD_PATH | (seq (.getURLs (ClassLoade... | variable | These are the loaded loadpaths/classpa... |         |
+    | 35 | $RUBYLIB   | $CLASSPATH                    | variable | These environment variables can be man... |         |
+    | 42 | _          | *1                            | variable | These give back the returned value fro... |         |
+    | 43 | $!         | *e                            | variable | While ruby's is available to any progr... | true    |
+    +----+------------+-------------------------------+----------+-------------------------------------------+---------+
+
+## Record Fields
+
+A record can have the following fields:
+
+* :id (required) - A unique integer identifying the record. Automatically generated.
+* :ruby (required) - Main field for ruby. Contains full method name when fn type. Can also contain
+  code, be a gem name, etc. depending on the type.
+* :clj (required) - Main field for clojure.
+* :ruby-lib - When fn type, an optional field for stdlib or gem name that a method belongs to.
+* :type: Has one of the following values: fn, constant, variable, lib, code and keyword. When
+  not specified defaults to fn. More about each type:
+  * fn - compares a ruby method to clojure fn
+  * constant - compares a ruby and/or clojure constant
+  * variable - compares a ruby and/or clojure variable
+  * code - compares ruby and/or clojure code
+  * keyword - compares a language level feature, keyword in ruby and special form in clojure
+  * lib - compares ruby gem to clojar
+* :desc - A description of the record
 
 ## Contributing
 
@@ -103,9 +147,8 @@ If you have some ruby/clojure comparisons, please add them to [rubydoc's
 database](https://github.com/cldwalker/rubydoc/blob/master/src/rubydoc/db.clj)! Please add them to
 the end of file (to keep record ids consistent). I would definitely love to see this become a
 community resource. While this project is primarily focused on method/functions, you can also add
-constants, variables, libraries (gems, jars), general code and keywords (language constructs).  When
-adding these records be sure to add a :type field with respective values of "constant", "variable",
-"lib", "code" and "keyword".
+constants, variables, libraries (gems/jars), general code and keywords (special forms).  When
+adding these records be sure to use an allowed type. See the Record Fields section for more info.
 
 [Some additional general guidelines](http://tagaholic.me/contributing.html). New tests aren't needed
 for db contributions.
