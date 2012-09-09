@@ -146,6 +146,11 @@
   (is (=
       '() (->> @@#'rubydoc.core/records (map :desc) (remove nil?) (filter #(not (re-find #"\.$" %)))))))
 
+(deftest all-types-are-valid
+  (is (=
+        #{"fn" "constant" "code" "keyword" "variable"}
+        (->> @@#'rubydoc.core/records (map :type) distinct set))))
+
 (deftest all-clojure-functions-resolve
   (is
     (=

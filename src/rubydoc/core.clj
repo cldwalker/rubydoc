@@ -6,11 +6,12 @@
 
 (defn rubydoc
   "Searches database of ruby-clojure records using a string, regex or record id.
-  Default search field is :ruby.
+  Default search fields are :ruby and :ruby-lib.
   Options:
 
   :clj  Search clojure field.
-  :all  Search all fields.
+  :type Search type field.
+  :all  Search all ruby and clojure fields.
   "
   [query & args]
   (print-records
