@@ -100,12 +100,12 @@ Let's search for ruby equivalents in clojure:
 ## Contributing
 
 If you have some ruby/clojure comparisons, please add them to [rubydoc's
-database](https://github.com/cldwalker/rubydoc/blob/master/src/rubydoc/db.clj)!
-Please add them to the end of file (to keep record ids consistent). I would definitely love to see
-this become a community resource. While this project is primarily focused on method/functions, you
-can also add constants, variables, general code and keywords (language constructs).  When adding
-these records be sure to add a :type field with respective values of "constant", "variable", "code"
-and "keyword".
+database](https://github.com/cldwalker/rubydoc/blob/master/src/rubydoc/db.clj)! Please add them to
+the end of file (to keep record ids consistent). I would definitely love to see this become a
+community resource. While this project is primarily focused on method/functions, you can also add
+constants, variables, libraries (gems, jars), general code and keywords (language constructs).  When
+adding these records be sure to add a :type field with respective values of "constant", "variable",
+"lib", "code" and "keyword".
 
 [Some additional general guidelines](http://tagaholic.me/contributing.html). New tests aren't needed
 for db contributions.

@@ -152,7 +152,7 @@
   :clj "clojure.core/defstruct",
   :desc
   "Given this ruby example \"Person = Struct.new(:name, :age); Person.new('Bo', 8)\", the clojure equivalent would be '(defstruct person :name :age) (struct person \"Bo\" 8)'."}
- {:ruby "ActiveSupport/Memoizable#memoize",
+ {:ruby "ActiveSupport::Memoizable#memoize",
   :clj "memoize",
   :ruby-lib "activesupport",
   :desc "Memoizes a function based on arguments."}
@@ -179,7 +179,7 @@
   :type "code"
   :desc
   "Returns arguments for given method/function. The ruby version returns an array of arrays with each array pair indicating if the argument is required, optional or a splatted arg - respectively :req, :opt, :rest."}
- {:ruby "[1,2,3].slice(1..-1)", :clj "clojure.core/rest"}
+ {:ruby "[1,2,3].slice(1..-1)", :clj "clojure.core/rest", :type "code"}
  {:ruby ["Hash#[]" "Hash#fetch"],
   :clj "clojure.core/get",
   :desc
@@ -323,6 +323,7 @@
  {:ruby "File::Separator", :clj "java.io.File/separator" :type "constant"}
  {:ruby "RUBY_VERSION" :clj "clojure.core/clojure-version" :type "constant"}
  {:ruby "irb stdlib" :clj "clojure.main/repl"
+  :type "lib"
   :desc "Clojure's is smaller but also more extendable."}
  {:ruby "=begin and =end" :clj "clojure.core/comment"
   :type "keyword"

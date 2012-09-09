@@ -125,8 +125,15 @@
 
 (deftest all-types-are-valid
   (is (=
-        #{"fn" "constant" "code" "keyword" "variable"}
+        #{"fn" "constant" "code" "keyword" "variable" "lib"}
         (->> @@#'rubydoc.core/records (map :type) distinct set))))
+
+(deftest all-fn-types-have-valid-ruby-methods
+  (is (=
+        '()
+        (->> (rubydoc "fn" :type :raw)
+          (map :ruby)
+          (remove #(re-find #"^[A-Za-z:\d]+[#\.]\S+$" %))))))
 
 (deftest all-clojure-functions-resolve
   (is
