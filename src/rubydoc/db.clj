@@ -415,4 +415,20 @@
  {:ruby "Fixnum#/" :clj "clojure.core/quot"}
  {:ruby "Time#strftime" :clj "(.format (java.text.SimpleDateFormat. \"MMM d, yyyy\") date)"
   :type "code"}
- {:ruby "String#to_f" :clj "java.lang.Float/parseFloat"}]
+ {:ruby "String#to_f" :clj "java.lang.Float/parseFloat"}
+ {:ruby "case" :clj "clojure.core/case"
+  :type "keyword"
+  :desc "See also clojure.core/cond and clojure.core/condp."}
+ {:ruby "if" :clj "if" :type "keyword"}
+ {:ruby "if (x = some_value)" :clj "(if-let [x (some_value)])" :type "code"}
+ {:ruby "unless" :clj "if-not" :type "keyword"}
+ {:ruby "def" :clj "defn" :type "keyword"}
+ {:ruby "Module#private" :clj "clojure.core/defn-"
+  :similar true
+  :desc "defn- makes a private function while private only sets method(s) to private."}
+ {:ruby "while" :clj "clojure.core/while" :type "keyword"}
+ {:ruby "rescue" :clj "catch" :type "keyword"}
+ {:ruby "ensure" :clj "finally" :type "keyword"}
+ {:ruby "begin" :clj "try" :type "keyword"}
+ {:ruby ["Kernel#lambda", "Proc.new"] :clj "clojure.core/fn"
+  :desc "A shorthand for making anonymous functions is #(prn %)."}]

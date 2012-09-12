@@ -49,14 +49,16 @@
   (is (=
       (unindent
         "
-        +----+-------------+------------------------+
-        | id | ruby        | clj                    |
-        +----+-------------+------------------------+
-        | 2  | Kernel#exit | System/exit            |
-        | 4  | Kernel#load | clojure.core/load-file |
-        +----+-------------+------------------------+
+        +----+--------------+-----------------------+----------+
+        | id | ruby         | clj                   | ruby-lib |
+        +----+--------------+-----------------------+----------+
+        | 2  | Kernel#exit  | System/exit           |          |
+        | 6  | Kernel#puts  | clojure.core/println  |          |
+        | 7  | Kernel#print | clojure.core/print    |          |
+        | 8  | Kernel#pp    | clojure.pprint/pprint | pp       |
+        +----+--------------+-----------------------+----------+
         ")
-      (with-out-str (rubydoc #"Kernel#[el]")))))
+      (with-out-str (rubydoc #"Kernel#[ep]")))))
 
 
 (deftest prints-correct-result-for-record-number
@@ -103,7 +105,7 @@
 
 (deftest returns-correct-ruby-result-for-type-option
   (is (=
-        '("new" "throw" "clojure.core/comment")
+        '("new" "throw" "clojure.core/comment" "clojure.core/case" "if" "if-not" "defn" "clojure.core/while" "catch" "finally" "try")
         (map :clj (rubydoc "keyword" :type :raw)))))
 
 (deftest records-without-type-default-to-fn
