@@ -431,4 +431,6 @@
  {:ruby "ensure" :clj "finally" :type "keyword"}
  {:ruby "begin" :clj "try" :type "keyword"}
  {:ruby ["Kernel#lambda", "Proc.new"] :clj "clojure.core/fn"
-  :desc "A shorthand for making anonymous functions is #(prn %)."}]
+  :desc "A shorthand for making anonymous functions is #(prn %)."}
+ {:ruby "$stdin.gets" :clj "clojure.core/read-line" :type "code"
+  :desc "The ruby version has a newline at the end of the string while the clojure one doesn't."}]
