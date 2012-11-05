@@ -433,4 +433,5 @@
  {:ruby ["Kernel#lambda", "Proc.new"] :clj "clojure.core/fn"
   :desc "A shorthand for making anonymous functions is #(prn %)."}
  {:ruby "$stdin.gets" :clj "clojure.core/read-line" :type "code"
-  :desc "The ruby version has a newline at the end of the string while the clojure one doesn't."}]
+  :desc "The ruby version has a newline at the end of the string while the clojure one doesn't."}
+ {:ruby "String#include?" :clj "(.contains str substr)" :type "code"}]
