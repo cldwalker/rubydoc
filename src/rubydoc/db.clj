@@ -437,4 +437,6 @@
  {:ruby "String#include?" :clj "(.contains str substr)" :type "code"}
  {:ruby "StringIO.new" :clj "new java.io.StringWriter" :type "code"}
  {:ruby "Float#round(2)" :clj "(java.lang.Float/parseFloat (format \"%.2f\" 0.012345))" :type "code"
-  :desc "Rounding to a specific float precision."}]
+  :desc "Rounding to a specific float precision."}
+ {:ruby "String#start_with?" :clj "java.lang.String/startsWith"}
+ {:ruby "String#end_with?" :clj "java.lang.String/endsWidth"}]
