@@ -434,4 +434,7 @@
   :desc "A shorthand for making anonymous functions is #(prn %)."}
  {:ruby "$stdin.gets" :clj "clojure.core/read-line" :type "code"
   :desc "The ruby version has a newline at the end of the string while the clojure one doesn't."}
- {:ruby "String#include?" :clj "(.contains str substr)" :type "code"}]
+ {:ruby "String#include?" :clj "(.contains str substr)" :type "code"}
+ {:ruby "StringIO.new" :clj "new java.io.StringWriter" :type "code"}
+ {:ruby "Float#round(2)" :clj "(java.lang.Float/parseFloat (format \"%.2f\" 0.012345))" :type "code"
+  :desc "Rounding to a specific float precision."}]
