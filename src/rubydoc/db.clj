@@ -439,4 +439,5 @@
  {:ruby "Float#round(2)" :clj "(java.lang.Float/parseFloat (format \"%.2f\" 0.012345))" :type "code"
   :desc "Rounding to a specific float precision."}
  {:ruby "String#start_with?" :clj "java.lang.String/startsWith"}
- {:ruby "String#end_with?" :clj "java.lang.String/endsWidth"}]
+ {:ruby "String#end_with?" :clj "java.lang.String/endsWidth"}
+ {:ruby "Dir.pwd" :clj "(.getCanonicalPath (java.io.File. "."))" :type "code"}]
