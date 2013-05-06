@@ -10,11 +10,11 @@ comparisons. Compares versions >= ruby 1.9.3 and clojure 1.4.0.
 
 To have it available on all projects, add to your leiningen2's ~/lein/profiles.clj:
 
-    {:user {:dependencies { rubydoc "0.3.0"}}}
+    {:user {:dependencies { rubydoc "0.4.0"}}}
 
 To have it on an individual project, add to your project.clj:
 
-    [rubydoc "0.3.0"]
+    [rubydoc "0.4.0"]
 
 ## Usage
 

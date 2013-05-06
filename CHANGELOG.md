@@ -1,3 +1,7 @@
+## 0.4.0
+* Bump dependencies
+* Add 20+ entries
+
 ## 0.3.0
 * Add :ruby-lib and :type fields to records
 * Record count at 200+
