@@ -440,4 +440,6 @@
   :desc "Rounding to a specific float precision."}
  {:ruby "String#start_with?" :clj "java.lang.String/startsWith"}
  {:ruby "String#end_with?" :clj "java.lang.String/endsWidth"}
- {:ruby "Dir.pwd" :clj "(.getCanonicalPath (java.io.File. "."))" :type "code"}]
+ {:ruby "Dir.pwd" :clj "(.getCanonicalPath (java.io.File. "."))" :type "code"}
+ {:ruby "Enumerable#find" :clj "(some #(and (predicate-fn %) %) items)" :type "code"
+  :desc "In the clojure example, predicate-fn is the same as the block that would be passed to the ruby example."}]
