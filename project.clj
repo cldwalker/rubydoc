@@ -3,7 +3,7 @@
   :url "http://github.com/cldwalker/rubydoc"
   :license {:name "The MIT License"
             :url "https://en.wikipedia.org/wiki/MIT_License"}
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [table "0.3.2"]]
-  :profiles {:1.5 {:dependencies [[org.clojure/clojure "1.5.0-RC1"]]}}
-  :aliases {"all" ["with-profile" "dev:dev,1.5"]})
+  :dependencies [[org.clojure/clojure "1.5.1"]
+                 [table "0.4.0"]]
+  :profiles {:1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}}
+  :aliases {"all" ["with-profile" "dev:dev,1.4"]})
