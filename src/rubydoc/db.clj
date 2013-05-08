@@ -328,7 +328,7 @@
  {:ruby "=begin and =end" :clj "clojure.core/comment"
   :type "keyword"
   :desc "Multiline comment strings. Clojure can also comment any sexp by placing #_ in front of it."}
- {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3])", :type "code"}
+ {:ruby "Array#compact" :clj "(remove nil? [1 2 nil 3]) OR (keep identity [1 2 nil 3])", :type "code"}
  {:ruby "Enumerable#shuffle" :clj "clojure.core/shuffle"}
  {:ruby ["Enumerable#cycle", "Array#*"] :clj "clojure.core/cycle"}
  {:ruby "Enumerable#each_with_object" :clj "clojure.core/reduce"
