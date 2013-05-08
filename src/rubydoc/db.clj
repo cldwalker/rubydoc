@@ -442,4 +442,6 @@
  {:ruby "String#end_with?" :clj "java.lang.String/endsWidth"}
  {:ruby "Dir.pwd" :clj "(.getCanonicalPath (java.io.File. "."))" :type "code"}
  {:ruby "Enumerable#find" :clj "(some #(and (predicate-fn %) %) items)" :type "code"
-  :desc "In the clojure example, predicate-fn is the same as the block that would be passed to the ruby example."}]
+  :desc "In the clojure example, predicate-fn is the same as the block that would be passed to the ruby example."}
+ {:ruby "Object#try" :ruby-lib "activesupport" :clj "clojure.core/some->"
+  :desc "some-> has the same idea as try - keep passing on the result of the previous call unless nil which terminates it."}]
